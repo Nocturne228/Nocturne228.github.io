@@ -1,4 +1,4 @@
-site_name: 小马的练功房
+site_name: MkDocs YouTube Tutorial
 theme:
   name: material
   features:
@@ -29,11 +29,11 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github-alt
-      link: https://github.com/james-willett
+      link: https://github.com/Nocturne228
     - icon: fontawesome/brands/twitter
-      link: https://twitter.com/TheJamesWillett
-    - icon: fontawesome/brands/linkedin
-      link: https://www.linkedin.com/in/willettjames/
+      link: https://twitter.com/mabaogu84503745
+    - icon: fontawesome/brands/bilibili
+      link: https://space.bilibili.com/108460783?spm_id_from=333.1007.0.0
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -53,4 +53,4 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
 copyright: |
-  &copy; 2023 <a href="https://github.com/james-willett"  target="_blank" rel="noopener">James Willett</a>
+  &copy; 2023 <a href="https://github.com/Nocturne228"  target="_blank" rel="noopener">James Willett</a>
