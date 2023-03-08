@@ -86,6 +86,7 @@ typedef struct DataStack {
 > 参考余腊生的PPT
 
 **fundamental Terminology**
+
 + Data: Data carry message.
   + Numeric data
   + Non-numeric data
@@ -95,9 +96,10 @@ typedef struct DataStack {
 + Data type(int e.g.): Express the range(0~2,147,483,647) and their methods set(+-*/ e.g.).
 
 **ADT(Abstract Data Type)**
-    + Encapsulation
-    + Inheritance
-    + Polymorphism
+
++ Encapsulation
++ Inheritance
++ Polymorphism
 
 Form description of ADT:(**important**)
 ``` c
@@ -128,12 +130,17 @@ ADT Complex {
     Add(Z1, Z2, &sum); 
 }ADT Complex;
 ```
+
 + predecessor and successor
-Only one predecessor and one successor: Linear list
-Only one predecessor and multiple successor: Tree
-multiple predecessor and multiple successor: Graph
+
+    Only one predecessor and one successor: Linear list
+
+    Only one predecessor and multiple successor: Tree
+
+    multiple predecessor and multiple successor: Graph
 
 *Can three structures mentioned above represent all the relationships in nature?*
+
 Not. We need **Set**.
 
 Linearlist, Tree, Graph and Set can represents every relationships.
@@ -156,6 +163,7 @@ Data forms of organization ，the logical relation between the data element
 **Abstract** is the most important thing in programming.
 
 步骤抽象（Procedure Abstraction）
+
 + 把函数当做黑盒子 treating funcion as black box
 + 予以明确的描述 giving concise specification
 
