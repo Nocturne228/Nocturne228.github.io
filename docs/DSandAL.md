@@ -1,10 +1,10 @@
-# 核心课
+# 数据结构与算法
 
 计算机中的核心课程（我认为），主要是算法相关，这样划分只是为了单个界面不至于太多内容
 
 ## 数据结构
 
-### 基础
+### Introduction
 
 #### 结构体
 
@@ -79,7 +79,7 @@ typedef struct DataStack {
 } Stack, *S;
 ```
 
-现在，可以用*Stack*来定义*DataStack*类型的变量，用*S*定义指向*DataStack*类型的指针变量。
+现在，可以用`Stack`来定义`DataStack`类型的变量，用`S`定义指向`DataStack`类型的指针变量。
 
 ### 概论
 一些正式讲课前的宏观层面的观点，就当随想集记录一下：
@@ -92,7 +92,7 @@ typedef struct DataStack {
   + Non-numeric data
 + Data element/member
 + Data item
-+ Data object: Set of Data members
++ Data object: Set of Data members with the SAME type
 + Data type(int e.g.): Express the range(0~2,147,483,647) and their methods set(+-*/ e.g.).
 
 **ADT(Abstract Data Type)**
@@ -159,7 +159,8 @@ Data forms of organization ，the logical relation between the data element
 
 [虽然想锻炼英语能力，但为了避免复习时看得太难受，还是用中文吧]
 
-**抽象**是编程中最重要的事情。
+ **抽象** 是编程中最重要的事情。
+
 **Abstract** is the most important thing in programming.
 
 步骤抽象（Procedure Abstraction）
@@ -169,8 +170,58 @@ Data forms of organization ，the logical relation between the data element
 
 
 对于一个函数，我们只需要输入一个数，然后得到输出结果（也可以为void），而不关心具体细节
+
 这样的抽象使得函数自身对程序没有影响，同时解放了程序员，极大地减小了工作量
 
+#### 复杂度(Complexity)
+
+**时间复杂度**
+
+**空间复杂度**
+
+
+
+**后续课程的基本脉络**
+
+1. 给出抽象数据类型（ADT）的定义
+2. 给出逻辑结构（Logical）
+3. 使用不同的存储方式（Physical）
+4. 实际应用
+
+### Linear List
+
+n个元素形成的序列，其中基本组成有表的头元素、尾元素、直接前驱与直接后继
+
+几个重要概念：
+
++ Linear List
++ Length
++ Is Empty?
++ Order
+
+注：这里的Order指元素的位序，其从1开始（而非0）
+
+#### ADT of Linear List
+
+    ADT   List {
+    Data object：D＝{ ai | a_i ∈ElemType, i=1,2,...,n, n≥0 }
+    Relation ：R1＝{ <ai-1 ,ai >|ai-1 ,ai∈D, i=2,...,n }
+    Operations ：
+        InitList( &L ) 
+        DestroyList( &L )
+        ListEmpty( L )  // to check the status   may  include a ListFull()
+        ListLength( L )  //to get the attribute
+        //to get the element in the list
+        PriorElem( L, cur_e, &pre_e )
+        NextElem( L, cur_e, &next_e )
+        GetElem( L, i, &e )
+        LocateElem( L, e, compare( ) ) //to search
+        ListTraverse(L, visit( )) //to  traverse it(visit all the elements in the list and only once)
+        ClearList( &L ) 
+        PutElem(& L, i, e ) 
+        ListInsert( &L, i, e ) 
+        ListDelete( &L, i, &e)
+    } ADT List
 
 
 ## 算法
