@@ -1444,7 +1444,7 @@ canvas:not(#ribbon-canvas),
   }
 }
 :root {
-  --global-font-size: 14px;
+  --global-font-size: 15px;
   --global-bg: #fff;
   --font-color: #4c4948;
   --hr-border: #d2ebfd;
@@ -3352,13 +3352,6 @@ h1.page-title + .tag-cloud-list {
   background-attachment: scroll;
   background-position: bottom;
   background-size: cover;
-}
-#footer:before {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: var(--mark-bg);
-  content: '';
 }
 #footer-wrap {
   position: relative;
