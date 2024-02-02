@@ -1,0 +1,406 @@
+<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>机器学习·决策树 | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="根据《统计学习方法》总结的关于决策树的算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习·决策树">
+<meta property="og:url" content="https://nocturne228.github.io/2024/02/03/decisiontree/index.html">
+<meta property="og:site_name" content="Xiaoma&#39;s blog">
+<meta property="og:description" content="根据《统计学习方法》总结的关于决策树的算法">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="https://nocturne228.github.io/my_image/haibara1.png">
+<meta property="article:published_time" content="2024-02-02T17:29:04.000Z">
+<meta property="article:modified_time" content="2024-02-02T17:30:50.058Z">
+<meta property="article:author" content="Nocturne">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="决策树">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nocturne228.github.io/my_image/haibara1.png"><link rel="shortcut icon" href="/img/terminal-solid.svg"><link rel="canonical" href="https://nocturne228.github.io/2024/02/03/decisiontree/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机器学习·决策树',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-03 01:30:50'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara1.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">机器学习·决策树</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-02-02T17:29:04.000Z" title="Created 2024-02-03 01:29:04">2024-02-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-02-02T17:30:50.058Z" title="Updated 2024-02-03 01:30:50">2024-02-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Note/">Note</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Note/MachineLearning/">MachineLearning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">4.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>16mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="机器学习·决策树"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p>决策树是一种基本的分类与回归方法，这里讨论的分类决策树是基于特征对实例进行分类的树形结构。可以看做一组if-then规则的集合。学习步骤：特征选择、生成决策树、剪枝。</p>
+<p>决策树的结点有两种：内部结点表示一个特征或属性；叶结点表示一个类。</p>
+<p>决策树学习的算法通常是一个递归地选择最优特征，并根据该特征对训练数据进行分割，使得对各个子数据集有一个最好的分类的过程。上述过程只能对已有的训练数据有较好的分类能力，但可能发生过拟合，可以对生成的树进行自下而上的剪枝，提高泛化能力。</p>
+<p><strong>剪枝</strong>就是去掉过于细分的叶子结点，使其回退到父结点，然后将其改为新的叶结点。</p>
+<blockquote>
+<p>决策树的生成对应于模型的局部选择，决策树的剪枝对应于模型的全局选择。换言之，决策树的生成只考虑局部最优，而决策树的剪枝则考虑全局最优。</p>
+</blockquote>
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><p>特征选择是决定用哪个特征来划分特征空间，ID3算法使用信息增益作为准则，而C4.5算法使用信息增益比作为准则。</p>
+<h3 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h3><p>定义一个概率分布为</p>
+<script type="math/tex; mode=display">
+P(X=x_i)=p_i</script><p>的离散随机变量的$X$的熵为</p>
+<script type="math/tex; mode=display">
+H(X)=H(p)=-\sum^n_{i=1}p_i\log p_i</script><p>熵只依赖于随机变量的分布，而与其取值无关。</p>
+<p>设有随机变量$(X,Y)$，其联合概率分布为：</p>
+<script type="math/tex; mode=display">
+P(X=x_i,Y=y_j)=p_{ij},\quad i=1,2,\cdots,n;\quad j=1,2,\cdots,m</script><p>随机变量$X$给定的条件下随机变量$Y$的条件熵$H(Y|X)$定义为$X$给定条件下$Y$的条件概率分布的熵对$X$的数学期望</p>
+<script type="math/tex; mode=display">
+H(Y|X)=\sum^n_{i=1}p_iH(Y|X=x_i)</script><p>这里</p>
+<script type="math/tex; mode=display">
+p_i=P(X=x_i),i=1,2,\cdots,n</script><p><strong>信息增益</strong>表示得知特征$X$的信息而使得类$Y$的信息的不确定性减少的程度</p>
+<p>特征$A$对训练数据集$D$的信息增益$g(D,A)$，定义为该集合$D$的经验熵$H(D)$与特征$A$给定条件下$D$的经验条件熵$H(D|A)$之差，即</p>
+<script type="math/tex; mode=display">
+g(D,A)=H(D)-H(D|A)</script><p>决策树学习中的信息增益等价于训练数据集中类与特征的互信息</p>
+<p>由此，根据信息增益准则的特征选择方法是：对训练数据集（或子集）$D$，计算其每个特征的信息增益，并比较它们的大小，<strong>选择信息增益最大的特征</strong></p>
+<h4 id="信息增益的算法"><a href="#信息增益的算法" class="headerlink" title="信息增益的算法"></a>信息增益的算法</h4><p>设训练数据集为$D$，$|D|$表示其样本容量。设有$K$个类$C_k$，$k=1,2,\cdots,K$，$|C_k|$为属于类$C_k$的样本个数，$\sum^K_{k=1}|C_k|=|D|$。设特征$A$有$n$个不同的取值${a_1,a_2,\cdots,a_n}$，根据特征$A$的取值将$D$划分为$n$个子集$D_1,D_2\cdots,D_n$，$|D_i|$为$D_i$的样本个数，$\sum^n_{i=1}|D_i|=|D|$。记子集$D_i$中属于类$C_k$的样本的集合为$D_{ik}$，即$D_{ik}=D_i\cap C_k$，$|D_{ik}|$为$D_{ik}$的样本个数</p>
+<p>输入：训练数据集$D$和特征$A$；</p>
+<p>输出：特征$A$对训练数据集$D$的信息增益$g(D,A)$</p>
+<ol>
+<li><p>计算数据集$D$的经验熵$H(D)$</p>
+<script type="math/tex; mode=display">
+H(D)=-\sum^K_{k=1}\dfrac{|C_k|}{|D|}\log_2\dfrac{|C_k|}{|D|}</script></li>
+<li><p>计算特征$A$对数据集$D$的经验条件熵$H(D|A)$</p>
+<script type="math/tex; mode=display">
+H(D|A)=\sum^n_{i=1}\dfrac{|D_i|}{|D|}H(D_i)=-\sum^n_{i=1}\dfrac{|D_i|}{|D|}\sum^K_{k=1}\dfrac{|D_{ik}|}{|D_i|}\log_2\dfrac{|D_{ik|}}{|D_i|}</script></li>
+<li><p>计算信息增益</p>
+<script type="math/tex; mode=display">
+g(D,A)=H(D)-H(D|A)</script><h4 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h4></li>
+</ol>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="D:\markdowns\DecisionTree.assets\image-20240202135625759.png" alt="image-20240202135625759"></p>
+<p>依次为例介绍计算过程：</p>
+<ol>
+<li><p>计算整个数据集$D$的经验熵$H(D)$：</p>
+<script type="math/tex; mode=display">
+H(D)=-\sum^K_{k=1}\dfrac{|C_k|}{|D|}\log_2\dfrac{|C_k|}{|D|}</script><p>其中$|D|$表示该数据集的样本容量，即$15$，$C_k$表示被划分成多少个类别，根据最后一列可以知道划分成了两个类：是与否。因此$|C_k|=2,k=1,2$，并且可知数据集中$9$个样本为  <em>是​</em>，$6$个样本为  <em>否</em></p>
+<p>故</p>
+<script type="math/tex; mode=display">
+H(D)=-\dfrac{9}{15}\log_2\dfrac{9}{15}-\dfrac{6}{15}\log_2\dfrac{6}{15}</script></li>
+<li><p>计算各个特征对数据集$D$的信息增益，由表知共有四个特征，分别以$A_1,A_2,A_3,A_4$​表示年龄、有工作、有自己的房子和信贷情况四个特征。其中每个特征的每个取值将数据集划分成$|A_i|$个子集，如$A_1$有青年、中年、老年三个取值，将数据集划分为三部分$D_1,D_2,D_3$，每个子集都有类别的  <em>是</em> 与 <em>否</em>  两个取值，由此可以计算经验条件熵</p>
+<script type="math/tex; mode=display">
+H(D|A)=\sum^n_{i=1}\dfrac{|D_i|}{|D|}H(D_i)\\
+H(D_i)=\sum^K_{k=1}\dfrac{|D_{ik}|}{|D_i|}\log_2\dfrac{|D_{ik|}}{|D_i|}</script><p>以$A_1$为例：一共有青年、中年、老年三个取值，将数据集划分为三个子集，每个取值都对应五个样本，故</p>
+<script type="math/tex; mode=display">
+H(D|A_1)=\left[\dfrac{5}{15}H(D_1)+\dfrac{5}{15}H(D_2)+\dfrac{5}{15}H(D_3)\right]</script><p>对于值取青年的子集$D_1$，其五个元素所属类别取值有$2$个取值为  <em>是</em>，$3$个取值为  <em>否</em></p>
+</li>
+</ol>
+<script type="math/tex; mode=display">
+H(D_1)=\left(-\dfrac{2}{5}\log_2\dfrac{2}{5}-\dfrac{3}{5}\log_2\dfrac{3}{5}\right)</script><p>下同</p>
+<script type="math/tex; mode=display">
+H(D_2)=\left(-\dfrac{3}{5}\log_2\dfrac{3}{5}-\dfrac{2}{5}\log_2\dfrac{2}{5}\right)</script><script type="math/tex; mode=display">
+H(D_3)=\left(-\dfrac{4}{5}\log_2\dfrac{4}{5}-\dfrac{1}{5}\log_2\dfrac{1}{5}\right)</script><p>计算个特征对数据集$D$的信息增益：</p>
+<script type="math/tex; mode=display">
+g(D,A_1)=H(D)-H(D|A_1)=0.083</script><p>其他特征计算略，最后发现特征$A_3$（有自己的房子）信息增益最大，所以选择$A_3$作为最优特征。</p>
+<h3 id="信息增益比"><a href="#信息增益比" class="headerlink" title="信息增益比"></a>信息增益比</h3><p>信息增益准则更倾向于选择取值较多的特征，使用<strong>信息增益比</strong>可以矫正这个问题</p>
+<p>定义特征$A$对训练数据集$D$的信息增益比$g_R{D,A}$为其信息增益$g_R(D,A)$与训练数据集$D$关于特征$A$的值的熵$H_A(D)$之比：</p>
+<script type="math/tex; mode=display">
+g_R(D,A)=\dfrac{g(D,A)}{H_A(D)}</script><p>其中</p>
+<script type="math/tex; mode=display">
+H_A=-\sum^n_{i=1}\dfrac{|D_i|}{|D|}\log_2\dfrac{|D_i|}{|D|}</script><p>$n$是特征$A$​取值的个数。</p>
+<h2 id="生成决策树"><a href="#生成决策树" class="headerlink" title="生成决策树"></a>生成决策树</h2><h3 id="ID3算法"><a href="#ID3算法" class="headerlink" title="ID3算法"></a>ID3算法</h3><p>ID3算法的核心是在决策树各个节点上应用信息增益准则选择特征，递归地构建决策树。</p>
+<p>输入：训练数据集$D$，特征集$A$阈值$\epsilon$；</p>
+<p>输出：决策树$T$</p>
+<ol>
+<li>若$D$中所有实例属于同一类$C_k$，则$T$为单结点树，并将类$C_k$作为该结点的类标记，返回$T$</li>
+<li>若$A=\emptyset$，则$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类标记，返回$T$；</li>
+<li>否则按照上面的算法计算$A$中各特征对$D$的信息增益，选择信息增益最大的特征$A_g$；</li>
+<li>如果$A_g$的信息增益小于阈值$\epsilon$，则置$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类标记，返回$T$；</li>
+<li>否则，对$A_g$的每一可能值$a_i$，依$A_g=a_i$将$D$分割为若干非空子集$D_i$，将$D_i$中实例数最大的类作为标记，构建子结点，由结点及其子结点构成树$T$，返回$T$；</li>
+<li>对第$i$个子结点，以$D_i$为训练集，以$A-\{A_g\}$为特征集，递归地调用步骤1~5，得到子树$T_i$，返回$T_i$。</li>
+</ol>
+<h4 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h4><p>依旧是这个训练集</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="D:\markdowns\DecisionTree.assets\image-20240202135625759.png" alt="image-20240202135625759"></p>
+<p>由之前的计算知特征$A_3$的信息增益最大，所以选择特征 “有自己的房子” 作为根结点的特征。根据$A_3$取值的是与否将数据集$D$划分为两个子集$D_1$、$D_2$。$D_1$中只有同一类的样本点（类别取值全为”是”），故称为叶结点，类标记为”是”。</p>
+<p>对于$D_2$​，递归地进行信息增益的计算，选择信息增益最大的特征作为子树的根结点并根据取值进行划分，最后可以生成如下所示的决策树</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">A((有自己的房子))--是--&gt;A1[是]</span><br><span class="line">A--否--&gt;A2((有工作))</span><br><span class="line">A2--是--&gt;B1[是]</span><br><span class="line">A2--否--&gt;B2[否]</span><br></pre></td></tr></table></figure>
+<p>ID3算法生成的树很容易产生过拟合</p>
+<h3 id="C4-5算法"><a href="#C4-5算法" class="headerlink" title="C4.5算法"></a>C4.5算法</h3><p>C4.5算法相对ID3改进之处是使用信息增益比选择特征</p>
+<p>输入：训练数据集$D$，特征集$A$阈值$\epsilon$；</p>
+<p>输出：决策树$T$</p>
+<ol>
+<li>若$D$中所有实例属于同一类$C_k$，则$T$为单结点树，并将类$C_k$作为该结点的类标记，返回$T$</li>
+<li>若$A=\emptyset$，则$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类标记，返回$T$；</li>
+<li>否则按照上面的算法计算$A$中各特征对$D$的<strong>信息增益比</strong>，<strong>选择信息增益比最大的特征</strong>$A_g$；</li>
+<li>如果$A_g$的信息增益比小于阈值$\epsilon$，则置$T$为单结点树，并将$D$中实例数最大的类$C_k$作为该结点的类标记，返回$T$；</li>
+<li>否则，对$A_g$的每一可能值$a_i$，依$A_g=a_i$将$D$分割为若干非空子集$D_i$，将$D_i$中实例数最大的类作为标记，构建子结点，由结点及其子结点构成树$T$，返回$T$；</li>
+<li>对结点$i$，以$D_i$为训练集，以$A-\{A_g\}$为特征集，递归地调用步骤1~5，得到子树$T_i$，返回$T_i$。</li>
+</ol>
+<h2 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h2><p>上面的算法都是递归地产生决策树，往往对训练数据的分类很准确，但容易出现过拟合，且会过于复杂。对其进行简化的过程称为<strong>剪枝</strong>。往往通过极小化决策树整体的损失函数或代价函数来实现。</p>
+<p>设树$T$的叶结点个数为$|T|$，$t$是树$T$的叶结点，该叶结点由$N_t$个样本点，其中$k$类的样本点有$N_{tk}$个，$k=1,2,\cdots,K$，$H_t(T)$为叶结点$t$上的经验熵，$\alpha\ge0$为参数，则决策树学习的损失函数可以定义为</p>
+<script type="math/tex; mode=display">
+C_\alpha(T)=\sum^{|T|}_{t=1}N_tH_t(T)+\alpha|T|</script><p>其中经验熵为</p>
+<script type="math/tex; mode=display">
+H_t(T)=-\sum_k\dfrac{N_{tk}}{N_t}\log\dfrac{N_{tk}}{N_t}</script><p>在损失函数中，记预测误差$C(T)$为</p>
+<script type="math/tex; mode=display">
+C(T)=\sum^{|T|}_{t=1}N_tH_t(T)=-\sum^{|T|}_{t=1}\sum^K_{k=1}N_{tk}\log\dfrac{N_tk}{N_t}</script><p>也就是损失函数的右侧第一项，这时有</p>
+<script type="math/tex; mode=display">
+C_\alpha(T)=C(T)+\alpha|T|</script><p><strong>参数解释：</strong>$C(T)$表示模型对训练数据的预测误差，即模型与训练数据的拟合程度，$|T|$表示模型复杂度，参数$\alpha\ge0$控制两者之间的影响。较大的$\alpha$促使选择较简单的模型（树），相反则促使选择较复杂的模型（树）。$\alpha=0$时，意味着只考虑模型与训练数据的拟合程度，不考虑模型的复杂度。剪枝则是当$\alpha$​确定时，选择损失函数最小的树。</p>
+<h3 id="剪枝算法"><a href="#剪枝算法" class="headerlink" title="剪枝算法"></a>剪枝算法</h3><p>输入：生成算法产生的整个树$T$，参数$\alpha$；</p>
+<p>输出：修建后的子树$T_\alpha$。</p>
+<ol>
+<li><p>计算每个节点的经验熵</p>
+</li>
+<li><p>递归地从树的叶结点向上回缩</p>
+</li>
+<li><p>设一组叶结点回缩到其父结点之前与之后的整体树分别为$T_B$与$T_A$，其对应的损失函数值分别是$C_{\alpha}(T_B)$与$C_{\alpha}(T_A)$，如果</p>
+<script type="math/tex; mode=display">
+C_{\alpha}(T_A)\le C_{\alpha}(T_B)</script><p>则进行剪枝，即将父结点变为新的叶结点</p>
+</li>
+<li><p>返回第二步，直到不能继续执行为止，得到损失函数最小的子树$T_\alpha$</p>
+</li>
+</ol>
+<h2 id="CART算法"><a href="#CART算法" class="headerlink" title="CART算法"></a>CART算法</h2><p>分类与回归树（Classification And Regression Tree, CART）同样由特征选择、生成决策树和剪枝三个步骤组成。这里对分类树使用基尼系数最小化准则，生成的是一个<strong>二叉树</strong></p>
+<h3 id="CART生成"><a href="#CART生成" class="headerlink" title="CART生成"></a>CART生成</h3><h4 id="生成回归树"><a href="#生成回归树" class="headerlink" title="生成回归树"></a>生成回归树</h4><p>假设回归树将输入空间划分为$M$个单元$R_1,R_2,\cdots,R_M$，并且在每个单元$R_m$上有一个固定的输出值$c_m$，于是回归树模型可表示为</p>
+<script type="math/tex; mode=display">
+f(x)=\sum^M_{m=1}c_mI(x\in R_m)</script><p>使用平方误差作为回归树队训练数据的预测误差，则训练准则便是平方误差最小化求解每个单元上的最优输出值。单元$R_m$上的$c_m$的最优值$\hat{c}_m$是$R_m$上的所有输入实例$x_i$对应的输出$y_i$的均值，即</p>
+<script type="math/tex; mode=display">
+\hat{c}_m=\text{avg}(y_i|x_i\in R_m)</script><p>对输入空间的划分采用启发式的方法，选择第$j$各变量$x^{(j)}$和它取的值$s$作为切分变量和切分点。根据切分点划分为两个区域：</p>
+<script type="math/tex; mode=display">
+R_1(j,s)=\{x|x^{(j)}\le s\}\quad\text{and}\quad R_2(j,s)=\{x|x^{(j)}> s\}</script><p>求解如下表达式寻找最优切分变量$j$和最优切分点$s$：</p>
+<script type="math/tex; mode=display">
+\min_{j,s}\left[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_2}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\right]</script><h4 id="生成分类树"><a href="#生成分类树" class="headerlink" title="生成分类树"></a>生成分类树</h4><p>CART分类树使用基尼指数选择最优特征：</p>
+<p>假设有$K$个类，样本点属于第$k$类的概率为$p_k$，则概率分布的基尼指数定义为：</p>
+<script type="math/tex; mode=display">
+\text{Gini}(p)=\sum^K_{k=1}p_k(1-p_k)=1-\sum^K_{k=1}p_k^2</script><p>对于二类分类问题，若样本点属于第一个类的概率是$p$，则概率分布的基尼指数为</p>
+<script type="math/tex; mode=display">
+\text{Gini}(p)=2p(1-p)</script><p>对于给定的样本集合$D$，基尼指数为</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D)=1-\sum^K_{k=1}\left(\dfrac{|C_k|}{|D|}\right)^2</script><p>其中，$C_k$是$D$中属于第$k$类的样本子集，$K$是类的个数。</p>
+<p>假设样本集合$D$根据特征$A$是否取某一可能值$a$被分割成$D_1,D_2$两部分，即</p>
+<script type="math/tex; mode=display">
+D_1=\{(x,y)\in D|A(x)=a\},D_2=D-D_1</script><p>则在特征$A$的条件下，集合$D$的基尼指数定义为</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D,A)=\dfrac{|D_1|}{|D|}\text{Gini}(D_1)+\dfrac{|D_2|}{|D|}\text{Gini}(D_2)</script><p>基尼指数$\text{Gini}(D)$表示集合$D$的不确定性，$\text{Gini}(D,A)$表示经$A=a$分割后集合$D$的不确定性。其值越大，样本集合的不确定性也越大。</p>
+<h4 id="CART生成算法"><a href="#CART生成算法" class="headerlink" title="CART生成算法"></a>CART生成算法</h4><p>输入：训练数据集$D$，停止计算的条件；</p>
+<p>输出：CART决策树</p>
+<p>根据训练数据集，从根结点开始，递归地对每个结点进行以下操作，构建二叉决策树：</p>
+<ol>
+<li>设结点的训练数据集为$D$，计算现有特征对该数据集的基尼指数。此时，对每一个特征$A$，对其可能取的每个值$a$，根据样本点对$A=a$的测试为”是”或”否”，将$D$分割成$D_1$和$D_2$两部分，计算$A=a$时的基尼指数</li>
+<li>在所有可能的特征$A$以及他们所有可能得切分点$a$中，选择基尼指数最小的特征及其对应的切分点作为最优特征和最优切分点。以最优特征与最优切分点，从现结点生成两个子结点，将训练数据集依特征分配到两个子结点中去。</li>
+<li>对两个子结点递归地调用步骤1、2，直到满足停止条件</li>
+<li>生成CART决策树</li>
+</ol>
+<h4 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h4><p>还是这个数据集</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="D:\markdowns\DecisionTree.assets\image-20240202135625759.png" alt="image-20240202135625759"></p>
+<p>对于特征$A_1$，有三个取值（青年、中年、老年），记为$A_{11},A_{12},A_{13}$，计算基尼系数</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D,A_{11})=\dfrac{5}{15}\text{Gini}(D_1)+\dfrac{10}{15}\text{Gini}(D_2)</script><p>系数解释：特征”年龄”是否取值”青年”将数据集分为$D_1$（是青年，样本数为$5$）和$D_2$（不是青年，样本数为$10$），然后分别对子集求基尼系数</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D_1)=2\times\dfrac{2}{5}\times\left(1-\dfrac{2}{5}\right)</script><p>这里对于类标记来说，$D_1$有两个样本为”是”，概率为$\dfrac{2}{5}$代入公式即得。对于其他依次计算即可。另外需要注意的是，如果某个特征只有两个取值，则只有一个切分点，也即其两个取值的基尼指数相同。</p>
+<p>找到所有特征的所有取值中最小基尼系数的特征作为最优特征，其取值作为最优切分点。根结点由此生成两个子结点，其中一个为叶结点。对另一个结点继续计算剩余特征的基尼系数，找出最优特征和最优切分点。</p>
+<p>如果计算正确，本题生成的决策树和ID3算法生成的决策树相同</p>
+<h2 id="CART剪枝算法"><a href="#CART剪枝算法" class="headerlink" title="CART剪枝算法"></a>CART剪枝算法</h2><p>输入：CART算法生成的决策树$T_0$</p>
+<p>输出：最优决策树$T_\alpha$</p>
+<ol>
+<li><p>设$k=0$，$T=T_0$</p>
+</li>
+<li><p>设$\alpha=+\infty$</p>
+</li>
+<li><p>自下而上地对各内部结点$t$计算$C(T_t)$，$|T_t|$以及</p>
+<script type="math/tex; mode=display">
+g(t)=\dfrac{C(t)-C(T_t)}{|T_t|-1}\\
+\alpha=\min(\alpha,g(t))</script><p>这里$T_t$表示以$t$为根结点的子树，$C(T_t)$是对训练数据的预测误差，$|T_t|$是$T_t$的叶结点个数。</p>
+</li>
+<li><p>对$g(t)=\alpha$的内部结点$t$进行剪枝，并对叶结点$t$以多数表决法决定其类，得到树$T$。</p>
+</li>
+<li><p>设$k=k+1$，$\alpha_k=\alpha$，$T_k=T$。</p>
+</li>
+<li><p>如果$T_k$不是由根结点及两个叶结点构成的树，则回到步骤2；否则令$T_k=T_n$</p>
+</li>
+<li><p>采用交叉验证法在子树序列$T_0,T_1.\cdots,T_n$选取最优子树$T_\alpha$​。</p>
+</li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="ID3"><a href="#ID3" class="headerlink" title="ID3"></a>ID3</h2><p><strong>信息增益的计算：</strong></p>
+<script type="math/tex; mode=display">
+g(D,A)=H(D)-H(D|A)</script><p>其中$H(D)$表示数据集的经验熵</p>
+<script type="math/tex; mode=display">
+H(D)=-\sum^K_{k=1}\dfrac{|C_k|}{|D|}\log_2\dfrac{|C_k|}{|D|}</script><p>$H(D|A)$表示数据集对特征A的经验条件熵</p>
+<script type="math/tex; mode=display">
+H(D|A)=\sum^n_{i=1}\dfrac{|D_i|}{|D|}H(D_i)=-\sum^n_{i=1}\dfrac{|D_i|}{|D|}\sum^K_{k=1}\dfrac{|D_{ik}|}{|D_i|}\log_2\dfrac{|D_{ik|}}{|D_i|}</script><h2 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h2><p><strong>信息增益比</strong>的计算：</p>
+<script type="math/tex; mode=display">
+g_R(D,A)=\dfrac{g(D,A)}{H_A(D)}</script><p>其中</p>
+<script type="math/tex; mode=display">
+H_A=-\sum^n_{i=1}\dfrac{|D_i|}{|D|}\log_2\dfrac{|D_i|}{|D|}</script><p>$n$是特征$A$​取值的个数。</p>
+<h2 id="CART"><a href="#CART" class="headerlink" title="CART"></a>CART</h2><p>基尼指数计算</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D)=1-\sum^K_{k=1}\left(\dfrac{|C_k|}{|D|}\right)^2</script><p>每个特征值都是根据是否取值将原数据集分为两类</p>
+<script type="math/tex; mode=display">
+\text{Gini}(D,A)=\dfrac{|D_1|}{|D|}\text{Gini}(D_1)+\dfrac{|D_2|}{|D|}\text{Gini}(D_2)</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io">Nocturne</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io/2024/02/03/decisiontree/">https://nocturne228.github.io/2024/02/03/decisiontree/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E5%86%B3%E7%AD%96%E6%A0%91/">决策树</a></div><div class="post_share"><div class="social-share" data-image="/my_image/haibara1.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/02/02/consterr-md/" title="关于const的混淆"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">关于const的混淆</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/01/25/SVM/" title="机器学习·SVM"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara2.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-25</div><div class="title">机器学习·SVM</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nocturne</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nocturne228"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nocturne228" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:nocturne2282282@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">嗨害嗨，来了嗷</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text">决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9"><span class="toc-number">1.1.</span> <span class="toc-text">特征选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8A"><span class="toc-number">1.1.1.</span> <span class="toc-text">信息增益</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8A%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">信息增益的算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8A%E6%AF%94"><span class="toc-number">1.1.2.</span> <span class="toc-text">信息增益比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">生成决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ID3%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">ID3算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">例题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C4-5%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.2.</span> <span class="toc-text">C4.5算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AA%E6%9E%9D"><span class="toc-number">1.3.</span> <span class="toc-text">剪枝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%AA%E6%9E%9D%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">剪枝算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CART%E7%AE%97%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">CART算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CART%E7%94%9F%E6%88%90"><span class="toc-number">1.4.1.</span> <span class="toc-text">CART生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%9B%9E%E5%BD%92%E6%A0%91"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">生成回归树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%88%86%E7%B1%BB%E6%A0%91"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">生成分类树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CART%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">CART生成算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98-2"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">例题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CART%E5%89%AA%E6%9E%9D%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">CART剪枝算法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ID3"><span class="toc-number">2.1.</span> <span class="toc-text">ID3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C4-5"><span class="toc-number">2.2.</span> <span class="toc-text">C4.5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CART"><span class="toc-number">2.3.</span> <span class="toc-text">CART</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Nocturne</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
