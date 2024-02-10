@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>PA的附录 | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="PA后附的一些入门教程，包括Linux及命令行、git、gdb，略做笔记学习一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PA的附录">
+<meta property="og:url" content="https://nocturne228.github.io/2024/02/10/PAappendix/index.html">
+<meta property="og:site_name" content="Xiaoma&#39;s blog">
+<meta property="og:description" content="PA后附的一些入门教程，包括Linux及命令行、git、gdb，略做笔记学习一下">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="https://nocturne228.github.io/my_image/haibara3.jpg">
+<meta property="article:published_time" content="2024-02-10T15:40:20.000Z">
+<meta property="article:modified_time" content="2024-02-10T17:06:04.133Z">
+<meta property="article:author" content="Nocturne">
+<meta property="article:tag" content="NJU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nocturne228.github.io/my_image/haibara3.jpg"><link rel="shortcut icon" href="/img/terminal-solid.svg"><link rel="canonical" href="https://nocturne228.github.io/2024/02/10/PAappendix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'PA的附录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-11 01:06:04'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara3.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">PA的附录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-02-10T15:40:20.000Z" title="Created 2024-02-10 23:40:20">2024-02-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-02-10T17:06:04.133Z" title="Updated 2024-02-11 01:06:04">2024-02-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">5.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>23mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="PA的附录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="PA的附录"><a href="#PA的附录" class="headerlink" title="PA的附录"></a>PA的附录</h1><p>PA附录上了一些很棒的关于用到的各工具的简单入门，包括Linux及命令行、git、gdb，这里略做一点笔记</p>
+<h1 id="Linux入门"><a href="#Linux入门" class="headerlink" title="Linux入门"></a>Linux入门</h1><p>这里是jyy的Linux入门教程，在PA0中推荐，因为涉及了几个有趣的脚本程序，故在这里记录一下。</p>
+<h2 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h2><p>Linux命令行中命令的一般格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">命令名称 参数1 参数2 参数3 ...</span><br></pre></td></tr></table></figure>
+<p>很显然，参数是由空格(空白字符)而非其他分隔符隔开的。</p>
+<p>再三强调的命令：<code>man</code>，用于查看手册。</p>
+<blockquote>
+<p>为什么<code>cd</code>命令没有manpage，即无法使用<code>man</code>命令查看<code>cd</code>命令的手册？</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41147818/no-man-page-for-the-cd-command">https://stackoverflow.com/questions/41147818/no-man-page-for-the-cd-command</a></p>
+<p>Linux中基本上所有命令本质上都是程序，例如执运行。行<code>ls</code>命令时，shell读取系统的环境变量<code>$PATH</code>，自动从<code>PATH</code>位置的目录中寻找该命令程序</p>
+<p>而对于<code>cd</code>，由于当前工作目录(Current Working Directory)是由环境变量<code>PWD</code>控制的，此变量也对应<code>pwd</code>命令，即“print working directory”。由于<strong>子进程不能修改父进程的环境变量</strong>。因此，假设<code>cd</code>是位于<code>/bin/cd</code>的一条程序，运行<code>/bin/cd</code>命令时，它将只会改变<code>/bin/cd</code>及其所运行的任何内容的<code>PWD</code>，而不会修改shell的<code>PWD</code>。也就是此程序作为shell的子进程，无法修改父进程shell自身的环境变量。</p>
+<blockquote>
+<p>The environment variables of a parent process cannot be changed by a child process. So if your shell ran <code>/bin/cd</code> which changed <code>PWD</code> it would only affect <code>/bin/cd</code> and anything it ran. It would not change the shell’s <code>PWD</code>.</p>
+</blockquote>
+<p>既然如此，那就需要将<code>cd</code>命令内置进shell(built-in)，而不能作为<code>/bin</code>中的一条程序。因此为了展示<strong>程序</strong>帮助手册而设计的<code>man</code>自然没有<code>cd</code>的页面</p>
+<p>不过还是可以使用其他命令来了解<code>cd</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">type</span> <span class="built_in">cd</span></span></span><br><span class="line">cd is a shell builtin</span><br></pre></td></tr></table></figure>
+<p>也可以获取<code>cd</code>命令的帮助页面：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">help</span> <span class="built_in">cd</span></span></span><br><span class="line">cd: cd [-L|[-P [-e]] [-@]] [dir]</span><br><span class="line">    Change the shell working directory.</span><br><span class="line"></span><br><span class="line">    Change the current directory to DIR.  The default DIR is the value of the</span><br><span class="line">    HOME shell variable.</span><br><span class="line"></span><br><span class="line">    The variable CDPATH defines the search path for the directory containing</span><br><span class="line">    DIR.  Alternative directory names in CDPATH are separated by a colon (:).</span><br><span class="line">    A null directory name is the same as the current directory.  If DIR begins</span><br><span class="line">    with a slash (/), then CDPATH is not used.</span><br><span class="line"></span><br><span class="line">    If the directory is not found, and the shell option `cdable_vars&#x27; is set,</span><br><span class="line">    the word is assumed to be  a variable name.  If that variable has a value,</span><br><span class="line">    its value is used for DIR.</span><br><span class="line"></span><br><span class="line">    Options:</span><br><span class="line">        -L  force symbolic links to be followed: resolve symbolic links in</span><br><span class="line">        DIR after processing instances of `..&#x27;</span><br><span class="line">        -P  use the physical directory structure without following symbolic</span><br><span class="line">        links: resolve symbolic links in DIR before processing instances</span><br><span class="line">        of `..&#x27;</span><br><span class="line">        -e  if the -P option is supplied, and the current working directory</span><br><span class="line">        cannot be determined successfully, exit with a non-zero status</span><br><span class="line">        -@  on systems that support it, present a file with extended attributes</span><br><span class="line">            as a directory containing the file attributes</span><br><span class="line"></span><br><span class="line">    The default is to follow symbolic links, as if `-L&#x27; were specified.</span><br><span class="line">    `..&#x27; is processed by removing the immediately previous pathname component</span><br><span class="line">    back to a slash or the beginning of DIR.</span><br><span class="line"></span><br><span class="line">    Exit Status:</span><br><span class="line">    Returns 0 if the directory is changed, and if $PWD is set successfully when</span><br><span class="line">    -P is used; non-zero otherwise.</span><br></pre></td></tr></table></figure>
+<p>也可以使用<code>man builtins</code>来获取手册，cd相关的内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">cd [-L|[-P [-e]] [-@]] [dir]</span><br><span class="line">       Change  the  current  directory to dir.  if dir is not supplied,</span><br><span class="line">       the value of the HOME shell variable is the default.  Any  addi‐</span><br><span class="line">       tional arguments following dir are ignored.  The variable CDPATH</span><br><span class="line">       defines the search path for the directory containing  dir:  each</span><br><span class="line">       directory  name  in  CDPATH  is  searched  for dir.  Alternative</span><br><span class="line">       directory names in CDPATH are separated by a colon (:).  A  null</span><br><span class="line">       directory  name  in CDPATH is the same as the current directory,</span><br><span class="line">       i.e., ``.&#x27;&#x27;.  If dir begins with a slash (/), then CDPATH is not</span><br><span class="line">       used.  The  -P  option  causes  cd to use the physical directory</span><br><span class="line">       structure by resolving symbolic links while traversing  dir  and</span><br><span class="line">       before processing instances of .. in dir (see also the -P option</span><br><span class="line">       to the set builtin command); the -L option forces symbolic links</span><br><span class="line">       to  be followed by resolving the link after processing instances</span><br><span class="line">       of .. in dir.  If .. appears in dir, it is processed by removing</span><br><span class="line">       the  immediately previous pathname component from dir, back to a</span><br><span class="line">       slash or the beginning of dir.  If the  -e  option  is  supplied</span><br><span class="line">       with  -P,  and  the current working directory cannot be success‐</span><br><span class="line">       fully determined after a successful directory  change,  cd  will</span><br><span class="line">       return  an unsuccessful status.  On systems that support it, the</span><br><span class="line">       -@ option presents the extended  attributes  associated  with  a</span><br><span class="line">       file  as  a directory.  An argument of - is converted to $OLDPWD</span><br><span class="line">       before the directory change is attempted.  If a non-empty direc‐</span><br><span class="line">       tory  name  from  CDPATH is used, or if - is the first argument,</span><br><span class="line">       and the directory change is successful, the absolute pathname of</span><br><span class="line">       the  new  working  directory  is written to the standard output.</span><br><span class="line">       The return value is  true  if  the  directory  was  successfully</span><br><span class="line">       changed; false otherwise.</span><br></pre></td></tr></table></figure>
+<h2 id="统计代码行数"><a href="#统计代码行数" class="headerlink" title="统计代码行数"></a>统计代码行数</h2><p>统计一个目录中(包含子目录)中的代码行数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . | grep &#x27;\.c$\|\.h$&#x27; | xargs wc -l</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>find</code>操作可以搜索目录中的文件，故<code>grep</code>命令的输入内容便是shell当前工作目录下的所有文件</li>
+<li><code>grep</code>命令可以进行输入信息的过滤，其功能描述为：”print lines matching a pattern”.也就是说可以使用正则表达式来进行文本匹配，显然后面的字符串就是正则表达式了，此式表示匹配所有以<code>.c</code>或<code>.h</code>为后缀的文件</li>
+<li>连接这几条命令的操作符<code>|</code>称为管道符号，其左右都是shell命令，作用是将左边进程的标准输出连接至右边进程的标准输入(这里体现了UNIX设计哲学，有关这个可见：)</li>
+<li><code>wc</code>命令可以统计文件所占用的总行数，参数<code>-l</code>用于计算代码行数。<code>xargs</code>能够将标准输入转换为参数，传送给第一个参数所指定的程序</li>
+</ul>
+<h2 id="统计磁盘使用情况"><a href="#统计磁盘使用情况" class="headerlink" title="统计磁盘使用情况"></a>统计磁盘使用情况</h2><p>以下命令统计<code>/usr/share</code>目录下各个目录所占用的磁盘空间:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sc /usr/share/* | sort -nr</span><br></pre></td></tr></table></figure>
+<p><code>du</code>是磁盘空间分析工具, <code>du -sc</code>将目录的大小顺次输出到标准输出, 继而通过管道传送给<code>sort</code>. <code>sort</code>是数据排序工具, 其中的选项<code>-n</code>表示按照数值进行排序, 而<code>-r</code>则表示从大到小输出. <code>sort</code>可以将这些参数连写在一起.</p>
+<p><code>/usr/share</code>中的目录过多, 无法在一个屏幕内显示. 此时, 我们可以再使用一个命令: <code>more</code>或<code>less</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sc /usr/share/* | sort -nr | more</span><br></pre></td></tr></table></figure>
+<p><code>more</code>工具使用空格翻页, 并可以用<code>q</code>键在中途退出. <code>less</code>工具则更为强大, 不仅可以向下翻页, 还可以向上翻页, 同样使用<code>q</code>键退出.</p>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><h3 id="输出重定向-gt"><a href="#输出重定向-gt" class="headerlink" title="输出重定向&gt;"></a>输出重定向<code>&gt;</code></h3><p>可以使用<code>objdump</code>命令对编译好的程序进行反汇编，假设编译程序为<code>myprog</code>，若想将程序执行结果保存到<code>output</code>文件中，可以执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d myprog &gt; output</span><br></pre></td></tr></table></figure>
+<p><code>&gt;</code>是标准输出重定向符号, 可以将前一命令的输出重定向到文件<code>output</code>中.</p>
+<p>使用了输出重定向之后, 屏幕上就不会显示<code>myprog</code>输出的任何信息. 如果你希望输出到文件的同时也输出到屏幕上，使用<code>tee</code>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d myprog | tee output</span><br></pre></td></tr></table></figure>
+<p>输出重定向可以简化许多功能，如：</p>
+<p>创建文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt; </span><span class="language-bash">empty                  <span class="comment"># 创建一个名为empty的空文件</span></span></span><br></pre></td></tr></table></figure>
+<p>复制文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat old_file &gt; new_file  # 将文件old_file复制一份, 新文件名为new_file</span><br></pre></td></tr></table></figure>
+<h3 id="输入重定向-lt"><a href="#输入重定向-lt" class="headerlink" title="输入重定向&lt;"></a>输入重定向<code>&lt;</code></h3><p>一个程序需要输入大量数据时(例如OJ测试)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./myprog &lt; data</span><br></pre></td></tr></table></figure>
+<p><code>&lt;</code>是标准输入重定向符号, 可以将前一命令的输入重定向到文件<code>data</code>中.</p>
+<p>下面这个例子是在运行<code>myprog</code>的同时, 指定其从文件<code>data</code>中读入数据, 并将其输出信息打印到屏幕和文件<code>output</code>中. <code>time</code>工具记录了这一过程所消耗的时间, 最后你会在屏幕上看到<code>myprog</code>运行所需要的时间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time ./myprog &lt; data | tee output</span><br></pre></td></tr></table></figure>
+<p>如果你只关心<code>myprog</code>的运行时间, 你可以使用以下命令将<code>myprog</code>的输出过滤掉:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time ./myprog &lt; data &gt; /dev/null</span><br></pre></td></tr></table></figure>
+<p><code>/dev/null</code>是一个特殊的文件, 任何试图输出到它的信息都会被丢弃</p>
+<h2 id="使用Makefile管理工程"><a href="#使用Makefile管理工程" class="headerlink" title="使用Makefile管理工程"></a>使用Makefile管理工程</h2><p><code>Make</code>像是一个脚本工具，可以一键执行组织好的一串编译指令，用于编译含有多个源代码文件的大项目. The <code>make</code> utility requires a file, <code>Makefile</code> (or <code>makefile</code>), which defines set of tasks to be executed.</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">hello:hello.c</span></span><br><span class="line">    gcc hello.c -o hello    <span class="comment"># 注意开头的tab, 而不是空格</span></span><br><span class="line"></span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: clean</span></span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">    rm hello    <span class="comment"># 注意开头的tab, 而不是空格</span></span><br></pre></td></tr></table></figure>
+<p><code>Makefile</code>文件由若干规则组成，其一般格式为</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">目标文件名:依赖文件列表</span></span><br><span class="line">    用于生成目标文件的命令序列   <span class="comment"># 注意开头的tab, 而不是空格</span></span><br></pre></td></tr></table></figure>
+<p>以<code>hello</code>规则为例，它生成的目标文件是<code>hello</code>，依赖于文件<code>hello.c</code>，通过执行命令<code>gcc hello.c -o hello</code>来生成<code>hello</code>文件.</p>
+<p><code>clean</code>规则用于清除编译结果，且不依赖于任何文件.  这条规则用于规定<code>make clean</code>时要执行的命令</p>
+<p>然而当文件中刚好存在名为<code>clean</code>的文件时，<code>make clean</code>会得到”文件已经是最新版本”的提示. 因此可以使用<code>.PHONY</code>来告知<code>make</code>工具<code>clean</code>是一个伪目标，即不是一个真正的文件名，而是一个操作指令。</p>
+<h1 id="git"><a href="#git" class="headerlink" title="git"></a>git</h1><p>git 更是重量级，不必多介绍，这里只是简单入门：</p>
+<p>第一步自然是安装 git，在 Ubuntu 中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure>
+<p>安装好后进行一些配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;Nocturne2282282&quot;</span><br><span class="line">git config --global user.email &quot;206088020@qq.com&quot;</span><br><span class="line">git config --global core.editor vim</span><br><span class="line">git config --global color.ui true</span><br></pre></td></tr></table></figure>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>如果使用 <code>git clone</code> 命令下载项目代码，则已经包含<code>git</code>记录，不需要额外进行初始化。如果在其他的项目目录中使用<code>git</code>，需要进行初始化：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<h2 id="查看日志信息（存档信息）"><a href="#查看日志信息（存档信息）" class="headerlink" title="查看日志信息（存档信息）"></a>查看日志信息（存档信息）</h2><p>查看目前为止的所有存档</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p>查看与当前存档相比，哪些文件发生了变化</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+<h2 id="存档"><a href="#存档" class="headerlink" title="存档"></a>存档</h2><p>首先使用 <code>git status</code> 查看是否有新的文件或已修改的文件未被跟踪（trace，我更愿意理解为“留痕”），若有则使用<code>git add filename</code>将其加入跟踪列表，如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add file.c</span><br></pre></td></tr></table></figure>
+<p>也可以一次添加所有未被跟踪的文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add -A</span><br></pre></td></tr></table></figure>
+<p>然而这样可能会跟踪一些不必要的次生文件，如编译产生的<code>.o</code>文件以及可执行文件等。一般只需要跟踪源代码文件即可，这一点可以通过配置<code>.gitignore</code>文件来进行筛选（此文件一般是隐藏的，可以通过<code>ls -a</code>命令看到）</p>
+<p>提交工程当前的状态：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
+<p>执行命令后将弹出文本编辑器，第一行应该添加本次提交的注释，实际工作中会有规范的提交内容。保存并退出编辑器后，存档成功，可以使用<code>git log</code>查看存档记录。</p>
+<h2 id="读档"><a href="#读档" class="headerlink" title="读档"></a>读档</h2><p>实际上存档与读档并不是 git 工作流的规定名称，而是拿游戏来举例的。当你需要读档的时候，可以先<code>git log</code>查看已有的存档，然后决定回到哪个存档点。每一个存档都有唯一的 hash code，在使用 git 进行回档时，通过指定对应存档的 hash code 来读取指定存档：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard b87c</span><br></pre></td></tr></table></figure>
+<p>显然 hash code 并没有这么短，不过实际应用中只需要输入存档的 hash code 前缀即可</p>
+<blockquote>
+<p><strong>注意：</strong>如同游戏一样，当你回到存档位置时，在那之后的所有记录都将消失！</p>
+</blockquote>
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>还有一种非常方便的方法可以避免上面的问题，即 git 的分支功能。</p>
+<p>查看所有分支以及当前所在分支：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<p>其中的<code>master</code>或<code>main</code>是主分支，在 git 初始化使自动创建。</p>
+<p>读档时使用命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout b87c</span><br></pre></td></tr></table></figure>
+<p>则会进入一个虚构的分支，在此分支中可以查看<code>b87</code>存档的内容，也可以通过<code>git checkout</code>切换到其他分支</p>
+<p>如果要修改代码内容，则需要保存到新的分支，可以使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout-B [branchname]</span><br></pre></td></tr></table></figure>
+<p>保存到新的分支中</p>
+<h1 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h1><h2 id="How-to-Debug-Bash-Scripts"><a href="#How-to-Debug-Bash-Scripts" class="headerlink" title="How to Debug Bash Scripts"></a>How to Debug Bash Scripts</h2><p>只是看 jyy 推荐的文章中推荐先看这一篇……</p>
+<p><a target="_blank" rel="noopener" href="https://linuxconfig.org/how-to-debug-bash-scripts">https://linuxconfig.org/how-to-debug-bash-scripts</a></p>
+<p><strong>some useful methods of debugging <a target="_blank" rel="noopener" href="https://linuxconfig.org/bash-scripting-tutorial-for-beginners">Bash scripts</a>:</strong></p>
+<ul>
+<li>How to use traditional techniques</li>
+<li>How to use the xtrace option</li>
+<li>How to use other Bash options</li>
+<li>How to use trap</li>
+</ul>
+<p>下面提到了一个有用的技巧：断言（assertion），在 PA0 和 PA1 也有出现断言错误需要解决：</p>
+<blockquote>
+<p>There are techniques used in traditional programming environments that can be useful with complex Bash scripts, such as using <strong>assertions</strong>. These are basically a ways of explicitly asserting conditions or the state of things at a point in time. Assertions can pinpoint even the subtlest of bugs. They may be implemented as a short function that shows the timing, line number and such, or something like this:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;function_name(): value of \\<span class="variable">$var</span> is <span class="variable">$&#123;var&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="How-to-use-Bash-xtrace-option"><a href="#How-to-use-Bash-xtrace-option" class="headerlink" title="How to use Bash xtrace option"></a>How to use Bash xtrace option</h3><p>我们一般倾向于写逻辑精简、单文件的 shell 脚本，故可以使用一些内置的 debug 选项来进行查错。这里介绍最有用的一个：<code>xtrace</code>选项。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -x &lt;scriptname&gt;</span><br></pre></td></tr></table></figure>
+<p>此选项会使 shell 在执行每条语句前展示其<strong>求值（evaluate）后</strong>的结果。对比另一个选项：<code>-v</code>与之相对，是展示每一条语句求值之前的结果。</p>
+<p>这两个选项可以同时使用：<code>-xv</code>，前者展示了变量带入（也可以表述为展开 expand）表达式后的语句，而后者则展示了变量带入前的语句内容。</p>
+<h3 id="How-to-use-other-Bash-options"><a href="#How-to-use-other-Bash-options" class="headerlink" title="How to use other Bash options"></a>How to use other Bash options</h3><p>所有的调试选项都是默认关闭的，但是当你使用<code>set</code>命令开启后便会保持开启，直到再次显式地关闭。可以使用<code>$-</code>展示所有开启的选项，即变量。</p>
+<p><code>-u</code>选项在一些时候也很有用。一般在 shell 执行 bash 脚本时不会输出某些错误信息，比如试图echo一个没有赋值的变量时，shell 并不会打印任何错误信息，但是开启<code>-u</code>后便会打印出错误。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://linuxconfig.org/wp-content/uploads/2019/09/02-how-to-debug-bash-scripts.png" alt=""></p>
+<p>例如写一个简单的小程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> 1 2 3</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="variable">$i</span> <span class="variable">$j</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>直接用<code>bash</code>运行脚本以及加上<code>-u</code>选项的结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ bash ./example.sh</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">❯ bash -u ./example.sh</span><br><span class="line">./example.sh: line 5: j: unbound variable</span><br></pre></td></tr></table></figure>
+<p>虽然但是，当运行更为复杂的脚本时，添加这些选项并不会使调试更加简单，相反还会因为输出了更多内容而变得更加复杂。</p>
+<p>那是否可以只对特定的代码块开启所需的选项，从而只输出我们想要的部分的错误信息呢？</p>
+<p>当然是有的，可以通过<code>set</code>以及<code>-options</code> <code>+options</code>包裹起代码块来实现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;ignore fileglobbing option turned off&quot;</span></span><br><span class="line"><span class="built_in">ls</span> *</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;ignore file globbing option set&quot;</span></span><br><span class="line"><span class="built_in">set</span> -f</span><br><span class="line"><span class="built_in">ls</span> *</span><br><span class="line"><span class="built_in">set</span> +f</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">❯ bash ./example.sh</span><br><span class="line">ignore fileglobbing option turned off</span><br><span class="line">example.sh			runtest.sh</span><br><span class="line">ignore file globbing option set</span><br><span class="line">ls: *: No such file or directory</span><br></pre></td></tr></table></figure>
+<p><code>f</code>选项可以关闭通配符How to use trap to help debug</p>
+<p>trap（陷阱）以及前面提到的 assertion 技巧都可以用于处理较为复杂的脚本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">trap</span> <span class="string">&#x27;echo score is $score, status is $status&#x27;</span> EXIT</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">	status=<span class="string">&quot;default&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	status=<span class="variable">$1</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">score=0</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;USER&#125;</span> = <span class="string">&#x27;superman&#x27;</span> ]; <span class="keyword">then</span></span><br><span class="line">	score=99</span><br><span class="line"><span class="keyword">elif</span> [ <span class="variable">$#</span> -gt 1 ]; <span class="keyword">then</span></span><br><span class="line">	score=<span class="variable">$2</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>这是一个在<code>EXIT</code>时的陷阱，也就是当到达脚本末尾时会触发这条陷阱语句执行（<code>echo</code> 语句）（显然<code>EXIT</code>不需要生成显式的<code>exit</code>语句）</p>
+<p>另外一个有用的陷阱是<code>DEBUG</code>，他在每一条语句执行后都会被触发： This happens after every statement, so it can be used as a brute force way to show the values of variables at each step in the script execution.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">trap</span> <span class="string">&#x27;echo &quot;line $&#123;LINENO&#125;: score is $score&quot;&#x27;</span> DEBUG</span><br><span class="line"></span><br><span class="line">score=0</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$&#123;USER&#125;</span>&quot;</span> = <span class="string">&quot;mike&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">let</span> <span class="string">&quot;score += 1&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> <span class="string">&quot;score += 1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$1</span>&quot;</span> = <span class="string">&quot;7&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	score=7</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>执行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">❯ bash ./example.sh</span><br><span class="line">line 5: score is</span><br><span class="line">line 7: score is 0</span><br><span class="line">line 11: score is 0</span><br><span class="line">line 13: score is 1</span><br><span class="line">line 16: score is 1</span><br><span class="line">❯ bash ./example.sh 7</span><br><span class="line">line 5: score is</span><br><span class="line">line 7: score is 0</span><br><span class="line">line 11: score is 0</span><br><span class="line">line 13: score is 1</span><br><span class="line">line 14: score is 1</span><br><span class="line">line 16: score is 7</span><br></pre></td></tr></table></figure>
+<h2 id="GDB-debugging-tutorial-for-beginners"><a href="#GDB-debugging-tutorial-for-beginners" class="headerlink" title="GDB debugging tutorial for beginners"></a>GDB debugging tutorial for beginners</h2><p><a target="_blank" rel="noopener" href="https://linuxconfig.org/gdb-debugging-tutorial-for-beginners">https://linuxconfig.org/gdb-debugging-tutorial-for-beginners</a></p>
+<ul>
+<li>How to install and use the GDB utility from the command line in Bash</li>
+<li>How to do basic GDB debugging using the GDB console and prompt</li>
+<li>Learn more about the detailed output GDB produces</li>
+</ul>
+<h3 id="Setting-up-GDB-and-a-test-program"><a href="#Setting-up-GDB-and-a-test-program" class="headerlink" title="Setting up GDB and a test program"></a>Setting up GDB and a test program</h3><p>话不多说，样例程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">actual_calc</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span>&#123;</span><br><span class="line">  <span class="type">int</span> c;</span><br><span class="line">  c=a/b;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">calc</span><span class="params">()</span>&#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">int</span> b;</span><br><span class="line">  a=<span class="number">13</span>;</span><br><span class="line">  b=<span class="number">0</span>;</span><br><span class="line">  actual_calc(a, b);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">  calc();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Executing-out-script-and-configuring-core-dumps"><a href="#Executing-out-script-and-configuring-core-dumps" class="headerlink" title="Executing out script and configuring core dumps"></a>Executing out script and configuring core dumps</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc -ggdb test.c -o test.out</span><br><span class="line">./test.out</span><br><span class="line">Floating point exception (core dumped)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>The <code>-ggdb</code> option to <code>gcc</code> will ensure that our debugging session using GDB will be a friendly one; it adds GDB specific debugging information to the <code>test.out</code> binary. We name this output binary file using the <code>-o</code> option to <code>gcc</code>, and as input we have our script <code>test.c</code>.</p>
+</blockquote>
+<p>这里我们关注报错信息中的<code>(core dumped)</code>，如果无法定位<code>core dumped</code>文件，执行脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ! grep -qi <span class="string">&#x27;kernel.core_pattern&#x27;</span> /etc/sysctl.conf; <span class="keyword">then</span></span><br><span class="line">  sudo sh -c <span class="string">&#x27;echo &quot;kernel.core_pattern=core.%p.%u.%s.%e.%t&quot; &gt;&gt; /etc/sysctl.conf&#x27;</span></span><br><span class="line">  sudo sysctl -p</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">ulimit</span> -c unlimited</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Here we are first making sure there is no Linux Kernel core pattern (<code>kernel.core_pattern</code>) setting made yet in <code>/etc/sysctl.conf</code> (the configuration file for setting system variables on Ubuntu and other operating systems), and – provided no existing core pattern was found – add a handy core file name pattern (<code>core.%p.%u.%s.%e.%t</code>) to the same file.</p>
+<p>The <code>sysctl -p</code> command (to be executed as root, hence the <code>sudo</code>) next ensures the file is immediately reloaded without requiring a reboot. For more information on the core pattern, you can see the <strong>Naming of core dump files</strong> section which can be accessed by using the <code>man core</code> command.</p>
+<p>Finally, the <code>ulimit -c unlimited</code> command simply sets the core file size maximum to <code>unlimited</code> for this session. This setting is <em>not</em> persistent across restarts.</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xiaoma@xiaoma-virtual-machine:~/Downloads/gdbtest$ sudo bash coredump.sh </span><br><span class="line">[sudo] password for xiaoma: </span><br><span class="line">kernel.core_pattern = core.%p.%u.%s.%e.%t</span><br></pre></td></tr></table></figure>
+<p>现在再次运行<code>test.out</code>文件便会看到<code>coredump</code>文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xiaoma@xiaoma-virtual-machine:~/Downloads/gdbtest$ ./test.out </span><br><span class="line">Floating point exception (core dumped)</span><br><span class="line">xiaoma@xiaoma-virtual-machine:~/Downloads/gdbtest$ ls</span><br><span class="line">core.4414.1000.8.test.out.1707581294  coredump.sh  test.c  test.out</span><br></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">file core.4414.1000.8.test.out.1707581294</span> </span><br><span class="line">core.4414.1000.8.test.out.1707581294: ELF 64-bit LSB core file, x86-64, version 1 (SYSV), SVR4-style, from &#x27;./test.out&#x27;, real uid: 1000, effective uid: 1000, real gid: 1000, effective gid: 1000, execfn: &#x27;./test.out&#x27;, platform: &#x27;x86_64&#x27;</span><br></pre></td></tr></table></figure>
+<p>可以看到，这是一个64位的核心文件(64-bit core file)，可以从<code>.8.</code>判断这是8号信号终止了程序。8号信号是<code>SIGFPE</code>，是一个浮点异常。稍后GDB会展示这是一个算数异常。</p>
+<h3 id="Using-GDB-to-analyze-the-core-dump"><a href="#Using-GDB-to-analyze-the-core-dump" class="headerlink" title="Using GDB to analyze the core dump"></a>Using GDB to analyze the core dump</h3><p>使用GDB打开核心文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">gdb ./test.out ./core.4414.1000.8.test.out.1707581294</span> </span><br><span class="line">GNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1</span><br><span class="line">Copyright (C) 2022 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line">This is free software: you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br><span class="line">Type &quot;show copying&quot; and &quot;show warranty&quot; for details.</span><br><span class="line">This GDB was configured as &quot;x86_64-linux-gnu&quot;.</span><br><span class="line">Type &quot;show configuration&quot; for configuration details.</span><br><span class="line">For bug reporting instructions, please see:</span><br><span class="line">&lt;https://www.gnu.org/software/gdb/bugs/&gt;.</span><br><span class="line">Find the GDB manual and other documentation resources online at:</span><br><span class="line">    &lt;http://www.gnu.org/software/gdb/documentation/&gt;.</span><br><span class="line"></span><br><span class="line">For help, type &quot;help&quot;.</span><br><span class="line">Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...</span><br><span class="line">Reading symbols from ./test.out...</span><br><span class="line">[New LWP 4414]</span><br><span class="line">[Thread debugging using libthread_db enabled]</span><br><span class="line">Using host libthread_db library &quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;.</span><br><span class="line">Core was generated by `./test.out&#x27;.</span><br><span class="line">Program terminated with signal SIGFPE, Arithmetic exception.</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">0  0x000055f8e608113b <span class="keyword">in</span> actual_calc (a=13, b=0) at test.c:3</span></span><br><span class="line">3	  c=a/b;</span><br><span class="line">(gdb) </span><br></pre></td></tr></table></figure>
+<p>注意到第一行的GDB命令，第一个参数是二进制文件，第二个参数是核心文件，即 <strong>binary and core</strong>. </p>
+<p>第22行的信息可以看到，程序是被一个<code>SIGFPE</code>信号终止的，这是一个算术异常(Arithmetic exception)。这是一个很有用的信息！类似 java 中的异常，Arithmetic exception提示我们程序存在数学算数错误，而不是代码错误。</p>
+<p>接下来23行可以看到程序帧<code>#0</code>(frame，类似procedure，这个术语的含义可以再CS61A中看到，这里不多做讲解(我也不太明白其实，所以接下来的帧都用英文原文frame代替)). 可以看到关于此frame的很多信息，比如 procedure 的名称<code>actual_calc</code>，变量为<code>a=13, b=0</code>，位于<code>test.c</code>文件的第3行</p>
+<p>查看<code>test.c</code>文件的第3行，看到代码 <code>c=a/b</code>，显然这就是错误所在. 这就完成了对文件的错误排查.</p>
+<h3 id="Backtracing"><a href="#Backtracing" class="headerlink" title="Backtracing"></a>Backtracing</h3><p>Command <code>bt</code> which is a shorthand for backtracing maybe the most often used:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(gdb) bt</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">0  0x000055f8e608113b <span class="keyword">in</span> actual_calc (a=13, b=0) at test.c:3</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1  0x000055f8e6081171 <span class="keyword">in</span> calc () at test.c:12</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2  0x000055f8e608118a <span class="keyword">in</span> main () at test.c:17</span></span><br></pre></td></tr></table></figure>
+<p>此命令给出了对程序当前状态的跟踪（trace of the current state, that is, <strong>procedure after procedure called</strong>，of the program）. 实际上大概就是Python报错中经常能看到的<code>Traceback</code>，用于回溯问题根源. 另外，第一轮列的<code>#0</code>等编号都是对应frame的标号.</p>
+<p>这样就可以分析程序发生了什么：</p>
+<p>the program started, and <code>main()</code> was automatically called. Next, <code>main()</code> called <code>calc()</code> (and we can confirm this in the source code above), and finally <code>calc()</code> called <code>actual_calc</code> and there things went wrong.</p>
+<h3 id="Frame-inspection"><a href="#Frame-inspection" class="headerlink" title="Frame inspection"></a>Frame inspection</h3><p>we can inspect each frame, the matching source code (if it is available), and each variable step by step:</p>
+<p>转入<code>#2</code> frame</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(gdb) f 2</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2  0x000055f8e608118a <span class="keyword">in</span> main () at test.c:17</span></span><br><span class="line">17	  calc();</span><br></pre></td></tr></table></figure>
+<p>列出源代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(gdb) list</span><br><span class="line">12	  actual_calc(a, b);</span><br><span class="line">13	  return 0;</span><br><span class="line">14	&#125;</span><br><span class="line">15	</span><br><span class="line">16	int main()&#123;</span><br><span class="line">17	  calc();</span><br><span class="line">18	  return 0;</span><br><span class="line">19	&#125;</span><br></pre></td></tr></table></figure>
+<p>打印变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p a</span><br><span class="line">No symbol &quot;a&quot; in current context.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>GOTCHA</strong></p>
+<p>If the source code is different then the code which the binary was compiled from, one can be easily misled; the output may show non-applicable / changed source. </p>
+<p>GDB does <em>not</em> check if there is a source code revision match! It is thus of paramount importance that you <strong>use the exact same source code revision as the one from which your binary was compiled</strong>.</p>
+</blockquote>
+<p>现在转入frame <code>#1</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(gdb) f 1</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">1  0x000055f8e6081171 <span class="keyword">in</span> calc () at test.c:12</span></span><br><span class="line">12	  actual_calc(a, b);</span><br><span class="line">(gdb) list</span><br><span class="line">7	int calc()&#123;</span><br><span class="line">8	  int a;</span><br><span class="line">9	  int b;</span><br><span class="line">10	  a=13;</span><br><span class="line">11	  b=0;</span><br><span class="line">12	  actual_calc(a, b);</span><br><span class="line">13	  return 0;</span><br><span class="line">14	&#125;</span><br><span class="line">15	</span><br><span class="line">16	int main()&#123;</span><br></pre></td></tr></table></figure>
+<p>现在我们位于第12行，<code>calc</code>函数中.接下来打印变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(gdb) p a</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">1 = 13</span></span><br><span class="line">(gdb) p b</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">2 = 0</span></span><br><span class="line">(gdb) p c</span><br><span class="line">No symbol &quot;c&quot; in current context.</span><br><span class="line">(gdb) p a/b</span><br><span class="line">Division by zero</span><br></pre></td></tr></table></figure>
+<p><code>c</code>到现在（line 12）仍无法被打印，显然在当前上下文（context）中<code>c</code>还是未定义的变量.</p>
+<p>最后来看frame <code>#0</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(gdb) f 0</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">0  0x000055f8e608113b <span class="keyword">in</span> actual_calc (a=13, b=0) at test.c:3</span></span><br><span class="line">3	  c=a/b;</span><br><span class="line">(gdb) p a</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">3 = 13</span></span><br><span class="line">(gdb) p b</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">4 = 0</span></span><br><span class="line">(gdb) p c</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">5 = 0</span></span><br></pre></td></tr></table></figure>
+<p>（我的<code>c</code>打印出来值是0，而教程为22010，原因可以再下面的探讨中得出）</p>
+<p>显然我们已经定义了<code>c</code>，但是还没有给定初始值，即还没有被表达式<code>c=a/b</code>求值，（而且实际上失败了）. 故<code>c</code>实际上还是未定义的（undefined）.The resulting value was likely read from some address space to which the variable <code>c</code> was assigned (and that memory space was not initialized/cleared yet).</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io">Nocturne</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io/2024/02/10/PAappendix/">https://nocturne228.github.io/2024/02/10/PAappendix/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NJU/">NJU</a></div><div class="post_share"><div class="social-share" data-image="/my_image/haibara3.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/02/10/vm0/" title="虚拟机相关问题"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">虚拟机相关问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/02/09/njupa0/" title="PA0实验记录"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-09</div><div class="title">PA0实验记录</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nocturne</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nocturne228"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nocturne228" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:nocturne2282282@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">嗨害嗨，来了嗷</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PA%E7%9A%84%E9%99%84%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">PA的附录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">Linux入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">命令行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E4%BB%A3%E7%A0%81%E8%A1%8C%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">统计代码行数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E7%A3%81%E7%9B%98%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-number">2.3.</span> <span class="toc-text">统计磁盘使用情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">2.4.</span> <span class="toc-text">重定向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91-gt"><span class="toc-number">2.4.1.</span> <span class="toc-text">输出重定向&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91-lt"><span class="toc-number">2.4.2.</span> <span class="toc-text">输入重定向&lt;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Makefile%E7%AE%A1%E7%90%86%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.5.</span> <span class="toc-text">使用Makefile管理工程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git"><span class="toc-number">3.</span> <span class="toc-text">git</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%EF%BC%88%E5%AD%98%E6%A1%A3%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">查看日志信息（存档信息）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E6%A1%A3"><span class="toc-number">3.3.</span> <span class="toc-text">存档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E6%A1%A3"><span class="toc-number">3.4.</span> <span class="toc-text">读档</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-number">3.5.</span> <span class="toc-text">分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GDB"><span class="toc-number">4.</span> <span class="toc-text">GDB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#How-to-Debug-Bash-Scripts"><span class="toc-number">4.1.</span> <span class="toc-text">How to Debug Bash Scripts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#How-to-use-Bash-xtrace-option"><span class="toc-number">4.1.1.</span> <span class="toc-text">How to use Bash xtrace option</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How-to-use-other-Bash-options"><span class="toc-number">4.1.2.</span> <span class="toc-text">How to use other Bash options</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDB-debugging-tutorial-for-beginners"><span class="toc-number">4.2.</span> <span class="toc-text">GDB debugging tutorial for beginners</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Setting-up-GDB-and-a-test-program"><span class="toc-number">4.2.1.</span> <span class="toc-text">Setting up GDB and a test program</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Executing-out-script-and-configuring-core-dumps"><span class="toc-number">4.2.2.</span> <span class="toc-text">Executing out script and configuring core dumps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-GDB-to-analyze-the-core-dump"><span class="toc-number">4.2.3.</span> <span class="toc-text">Using GDB to analyze the core dump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backtracing"><span class="toc-number">4.2.4.</span> <span class="toc-text">Backtracing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Frame-inspection"><span class="toc-number">4.2.5.</span> <span class="toc-text">Frame inspection</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Nocturne</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
