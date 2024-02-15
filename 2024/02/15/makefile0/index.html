@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Makefile幼儿园 | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="PA启发，略作一点Makefile(make工具)的学习，可以编写自动编译链接C源文件的脚本，同时了解一些GNU工具链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Makefile幼儿园">
+<meta property="og:url" content="https://nocturne228.github.io/2024/02/15/makefile0/index.html">
+<meta property="og:site_name" content="Xiaoma&#39;s blog">
+<meta property="og:description" content="PA启发，略作一点Makefile(make工具)的学习，可以编写自动编译链接C源文件的脚本，同时了解一些GNU工具链">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="https://nocturne228.github.io/my_image/haibara2.jpg">
+<meta property="article:published_time" content="2024-02-15T04:14:40.000Z">
+<meta property="article:modified_time" content="2024-02-15T04:17:37.841Z">
+<meta property="article:author" content="Nocturne">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="GNU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nocturne228.github.io/my_image/haibara2.jpg"><link rel="shortcut icon" href="/img/terminal-solid.svg"><link rel="canonical" href="https://nocturne228.github.io/2024/02/15/makefile0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Makefile幼儿园',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-02-15 12:17:37'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Feelings</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/daily/"><i class="fa-fw fa-solid fa-book"></i><span> Daily</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Makefile幼儿园</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-02-15T04:14:40.000Z" title="Created 2024-02-15 12:14:40">2024-02-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-02-15T04:17:37.841Z" title="Updated 2024-02-15 12:17:37">2024-02-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">4.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>18mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Makefile幼儿园"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://seisman.github.io/how-to-write-makefile/index.html">https://seisman.github.io/how-to-write-makefile/index.html</a></p>
+<h1 id="程序的编译与链接"><a href="#程序的编译与链接" class="headerlink" title="程序的编译与链接"></a>程序的编译与链接</h1><p>一般来说，无论是C、C++、还是pas，首先要把源文件编译成中间代码文件（参考 CSAPP 的那张图），在Windows下也就是 .obj 文件，UNIX下是 .o 文件，即 Object File，这个动作叫做编译（compile）。然后再把大量的Object File合成执行文件，这个动作叫作链接（link）</p>
+<p>编译时，编译器需要的是语法的正确，函数与变量的声明的正确。</p>
+<p>链接时，主要是链接函数和全局变量。在大多数时候，由于源文件太多，编译生成的中间目标文件太多，而在链接时需要明显地指出中间目标文件名，这对于编译很不方便，所以，我们要给中间目标文件打个包，在Windows下这种包叫“库文件”（Library File)，也就是 .lib 文件，在UNIX下，是Archive File，也就是 .a 文件。</p>
+<h1 id="Makefile规则"><a href="#Makefile规则" class="headerlink" title="Makefile规则"></a>Makefile规则</h1><p>Makefile 的书写规则：</p>
+<ol>
+<li>如果这个工程没有编译过，那么我们的所有C文件都要编译并被链接。</li>
+<li>如果这个工程的某几个C文件被修改，那么我们只编译被修改的C文件，并链接目标程序。</li>
+<li>如果这个工程的头文件被改变了，那么我们需要编译引用了这几个头文件的C文件，并链接目标程序。</li>
+</ol>
+<h2 id="Makefile的规则-rules"><a href="#Makefile的规则-rules" class="headerlink" title="Makefile的规则(rules)"></a>Makefile的规则(rules)</h2><p>A simple makefile consists of “rules” with the following shape:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">target … : prerequisites …</span><br><span class="line">        recipe</span><br><span class="line">        …</span><br><span class="line">        …</span><br></pre></td></tr></table></figure>
+<p>其中</p>
+<ul>
+<li><code>target</code>是目标文件，可以是要生成的Object File，也可以是执行文件。还可以是要执行的动作名，如 <code>clean</code></li>
+<li><code>prerequisites</code>是生成<code>target</code>依赖的文件或目标。</li>
+<li><code>recipe</code>即<code>make</code>要执行的命令（任何 shell 命令），即 command<ul>
+<li><strong>注意</strong>！每一行<code>recipe</code>命令都必须以一个<code>[TAB]</code>开头而非空格！</li>
+</ul>
+</li>
+</ul>
+<p>这是一个文件的依赖关系，target这一个或多个的目标文件依赖于prerequisites中的文件，其生成规则定义在recipe中。依赖关系的实质上就是说明了目标文件是由哪些文件生成的，换言之，目标文件是哪些文件更新的。</p>
+<p>prerequisites中如果有一个以上的文件比target文件要新的话，recipe所定义的命令就会被执行。这就是Makefile的规则。也就是Makefile中最核心的内容。</p>
+<p>make会比较targets文件和prerequisites文件的修改日期，如果prerequisites文件的日期要比targets文件的日期要新，或者target不存在的话，那么，make就会执行后续定义的命令。</p>
+<p>下面这个 Makefile 文件的实例来自 GNU Make 文档 <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html">https://www.gnu.org/software/make/manual/make.html</a></p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">edit : main.o kbd.o command.o display.o \</span><br><span class="line">       insert.o search.o files.o utils.o</span><br><span class="line">        cc -o edit main.o kbd.o command.o display.o \</span><br><span class="line">                   insert.o search.o files.o utils.o</span><br><span class="line"></span><br><span class="line">main.o : main.c defs.h</span><br><span class="line">        cc -c main.c</span><br><span class="line">kbd.o : kbd.c defs.h command.h</span><br><span class="line">        cc -c kbd.c</span><br><span class="line">command.o : command.c defs.h command.h</span><br><span class="line">        cc -c command.c</span><br><span class="line">display.o : display.c defs.h buffer.h</span><br><span class="line">        cc -c display.c</span><br><span class="line">insert.o : insert.c defs.h buffer.h</span><br><span class="line">        cc -c insert.c</span><br><span class="line">search.o : search.c defs.h buffer.h</span><br><span class="line">        cc -c search.c</span><br><span class="line">files.o : files.c defs.h buffer.h command.h</span><br><span class="line">        cc -c files.c</span><br><span class="line">utils.o : utils.c defs.h</span><br><span class="line">        cc -c utils.c</span><br><span class="line">clean :</span><br><span class="line">        rm edit main.o kbd.o command.o display.o \</span><br><span class="line">           insert.o search.o files.o utils.o</span><br></pre></td></tr></table></figure>
+<p>这里的<code>\</code>类似 C 中的连接两行代码，用于将太长的单行命令分成多行方便阅读</p>
+<h2 id="make-是如何工作的"><a href="#make-是如何工作的" class="headerlink" title="make 是如何工作的"></a>make 是如何工作的</h2><p>根据此示例，我们在含有代码源文件和<code>Makefile</code>文件的工作目录下只需要输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol>
+<li>make会在当前目录下找名字叫“Makefile”或“makefile”的文件。</li>
+<li>如果找到，它会找文件中的第一个目标文件（target），在上面的例子中，他会找到“edit”这个文件，并把这个文件作为最终的目标文件。</li>
+<li>如果edit文件不存在，或是edit所依赖的后面的 .o 文件的文件修改时间要比edit这个文件新，那么，他就会执行后面所定义的命令来生成edit这个文件。</li>
+<li>如果edit所依赖的.o文件也存在，那么make会在当前文件中找目标为.o文件的依赖性，如果找到则再根据那一个规则生成.o文件。（这有点像一个堆栈的过程）</li>
+<li>如果.c文件和.h文件是存在的，make会生成 .o 文件，然后再用 .o 文件生成执行文件edit。</li>
+</ol>
+<p>make会一层又一层地去找文件的依赖关系，直到最终编译出第一个目标文件。在找寻的过程中，如果出现错误，比如最后 被依赖的文件找不到，那么make就会直接退出，并报错，而对于所定义的命令的错误，或是编译不成功，make并不关心，唯一关心的是文件的依赖性。</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><blockquote>
+<p>Such duplication is error-prone; if a new object file is added to the system, we might add it to one list and forget the other. We can eliminate the risk and simplify the makefile by using a variable.            ——— GNU make manual</p>
+</blockquote>
+<p>下面使用的变量同样来自 GNU make 文档</p>
+<p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Using-Variables">https://www.gnu.org/software/make/manual/make.html#Using-Variables</a></p>
+<p><code>Makefile</code>中的变量更像是C语言中的宏，组织起赋给它的字符串：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objects = main.o kbd.o command.o display.o \</span><br><span class="line">          insert.o search.o files.o utils.o</span><br></pre></td></tr></table></figure>
+<p>这样原来的 Makefile 文件就可以写成</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">objects = main.o kbd.o command.o display.o \</span><br><span class="line">          insert.o search.o files.o utils.o</span><br><span class="line"></span><br><span class="line">edit : <span class="variable">$(objects)</span></span><br><span class="line">        cc -o edit <span class="variable">$(objects)</span></span><br><span class="line">main.o : main.c defs.h</span><br><span class="line">        cc -c main.c</span><br><span class="line">kbd.o : kbd.c defs.h command.h</span><br><span class="line">        cc -c kbd.c</span><br><span class="line">command.o : command.c defs.h command.h</span><br><span class="line">        cc -c command.c</span><br><span class="line">display.o : display.c defs.h buffer.h</span><br><span class="line">        cc -c display.c</span><br><span class="line">insert.o : insert.c defs.h buffer.h</span><br><span class="line">        cc -c insert.c</span><br><span class="line">search.o : search.c defs.h buffer.h</span><br><span class="line">        cc -c search.c</span><br><span class="line">files.o : files.c defs.h buffer.h command.h</span><br><span class="line">        cc -c files.c</span><br><span class="line">utils.o : utils.c defs.h</span><br><span class="line">        cc -c utils.c</span><br><span class="line">clean :</span><br><span class="line">        rm edit <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，在定义了变量名<code>&lt;varname&gt;</code>后，只需要使用美元符号和括号包裹起来即可使用该变量<script type="math/tex">(varname)</script></p>
+<h2 id="make自动推导"><a href="#make自动推导" class="headerlink" title="make自动推导"></a>make自动推导</h2><p>GNU make可以自动推导文件以及文件依赖关系后面的命令，于是我们就没必要去在每一个[.o]文件后都写上类似的命令，因为make会自动识别并自己推导命令。</p>
+<p>只要make看到一个[.o]文件，它就会自动的把[.c]文件加在依赖关系中。比如，如果make找到一个<code>whatever.o</code>，那么<code>whatever.c</code>就会是<code>whatever.o</code>的依赖文件。并且 <code>cc -c whatever.c</code> 也会被推导出来：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">objects = main.o kbd.o command.o display.o \</span><br><span class="line">          insert.o search.o files.o utils.o</span><br><span class="line"></span><br><span class="line">edit : <span class="variable">$(objects)</span></span><br><span class="line">        cc -o edit <span class="variable">$(objects)</span></span><br><span class="line"></span><br><span class="line">main.o : defs.h</span><br><span class="line">kbd.o : defs.h command.h</span><br><span class="line">command.o : defs.h command.h</span><br><span class="line">display.o : defs.h buffer.h</span><br><span class="line">insert.o : defs.h buffer.h</span><br><span class="line">search.o : defs.h buffer.h</span><br><span class="line">files.o : defs.h buffer.h command.h</span><br><span class="line">utils.o : defs.h</span><br><span class="line"></span><br><span class="line">.PHONY : clean</span><br><span class="line">clean :</span><br><span class="line">        rm edit <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
+<p>也就是说，所有的<code>.o</code>文件的prerequisites都不再需要写上对应的<code>.c</code>文件，只需要链接上用到的头文件或即可。并且如果是简单的<code>gcc -c .c</code>命令，也可以省略</p>
+<h2 id="make-clean"><a href="#make-clean" class="headerlink" title="make clean"></a>make clean</h2><p><code>make clean</code>命令用于清除 make 生成的中间文件和目标文件，以便提交代码或者重新编译。<code>clean</code>的规则在前面示例的最后部分给出，可以看到我们还添加了一行命令：<code>.PHONY :clean</code></p>
+<blockquote>
+<p>A phony target is one that is not really the name of a file; rather it is just a name for a recipe to be executed when you make an explicit request.                ———GNU make manual.</p>
+</blockquote>
+<p>这样，如果目录下有一个名为<code>clean</code>的文件（一般也不会有），当执行<code>make clean</code>命令时，make 不会去试图构建 clean 文件，而是执行<code>Makefile</code>中的 <code>clean</code> 命令（也就是一个名为<code>clean</code>的文件不会混淆 make 工具）</p>
+<p>clean的规则不要放在文件的开头，不然，这就会变成make的默认目标。不成文的规矩是—— “clean从来都是放在文件的最后”。</p>
+<blockquote>
+<p>Since <code>clean</code> is not a prerequisite of <code>edit</code>, this rule will not run at all if we give the command ‘make’ with no arguments. In order to make the rule run, we have to type ‘make clean’. See <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Running">How to Run make</a>.            ———GNU make manual.</p>
+</blockquote>
+<h1 id="Makefile-总述"><a href="#Makefile-总述" class="headerlink" title="Makefile 总述"></a>Makefile 总述</h1><h2 id="Makefile-的组成"><a href="#Makefile-的组成" class="headerlink" title="Makefile 的组成"></a>Makefile 的组成</h2><p>Makefile里主要包含了五个东西：显式规则、隐晦规则、变量定义、文件指示和注释。</p>
+<ol>
+<li>显式规则。显式规则说明了，如何生成一个或多的的目标文件。这是由Makefile的书写者明显指出，要生成的文件，文件的依赖文件，生成的命令。</li>
+<li>隐晦规则。由于我们的make有自动推导的功能，所以隐晦的规则可以让我们比较粗糙地简略地书写Makefile，这是由make所支持的。</li>
+<li>变量的定义。在Makefile中我们要定义一系列的变量，变量一般都是字符串，这个有点你C语言中的宏，当Makefile被执行时，其中的变量都会被扩展到相应的引用位置上。</li>
+<li>文件指示。其包括了三个部分，一个是在一个Makefile中引用另一个Makefile，就像C语言中的include一样；另一个是指根据某些情况指 定Makefile中的有效部分，就像C语言中的预编译#if一样；还有就是定义一个多行的命令。有关这一部分的内容，我会在后续的部分中讲述。</li>
+<li>注释。Makefile中只有行注释，和UNIX的Shell脚本一样，其注释是用“#”字符，这个就像C/C++中的“//”一样。如果你要在你的Makefile中使用“#”字符，可以用反斜框进行转义，如：“/#”。</li>
+</ol>
+<p>注：Makefile 中的命令总是以<code>[TAB]</code>开始。</p>
+<p>Makefiles contain five kinds of things: <em>explicit rules</em>, <em>implicit rules</em>, <em>variable definitions</em>, <em>directives</em>, and <em>comments</em>. Rules, variables, and directives are described at length in later chapters.</p>
+<ul>
+<li>An <em>explicit rule</em> says when and how to remake one or more files, called the rule’s <em>targets</em>. It lists the other files that the targets depend on, called the <em>prerequisites</em> of the target, and may also give a recipe to use to create or update the targets. See <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Rules">Writing Rules</a>.</li>
+<li>An <em>implicit rule</em> says when and how to remake a class of files based on their names. It describes how a target may depend on a file with a name similar to the target and gives a recipe to create or update such a target. See <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Implicit-Rules">Using Implicit Rules</a>.</li>
+<li>A <em>variable definition</em> is a line that specifies a text string value for a variable that can be substituted into the text later. The simple makefile example shows a variable definition for <code>objects</code> as a list of all object files (see <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Variables-Simplify">Variables Make Makefiles Simpler</a>).</li>
+<li>A directive is an instruction for <code>make</code> to do something special while reading the makefile. These include:<ul>
+<li>Reading another makefile (see <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Include">Including Other Makefiles</a>).</li>
+<li>Deciding (based on the values of variables) whether to use or ignore a part of the makefile (see <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Conditionals">Conditional Parts of Makefiles</a>).</li>
+<li>Defining a variable from a verbatim string containing multiple lines (see <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Multi_002dLine">Defining Multi-Line Variables</a>).</li>
+</ul>
+</li>
+<li>‘#’ in a line of a makefile starts a <em>comment</em>. It and the rest of the line are ignored, except that a trailing backslash not escaped by another backslash will continue the comment across multiple lines. A line containing just a comment (with perhaps spaces before it) is effectively blank, and is ignored. If you want a literal <code>#</code>, escape it with a backslash (e.g., <code>\#</code>). Comments may appear on any line in the makefile, although they are treated specially in certain situations.</li>
+</ul>
+<h2 id="文件名一定是-Makefile？"><a href="#文件名一定是-Makefile？" class="headerlink" title="文件名一定是 Makefile？"></a>文件名一定是 Makefile？</h2><p>默认的情况下，make命令会 在当前目录下按顺序找寻文件名为“GNUmakefile”、“makefile”、“Makefile”的文件。</p>
+<p>显然，GNUmakefile 这个名字只会由 GNU make 自动识别，一般推荐文件命名为 Makefile（比较显眼）</p>
+<p>If you want to use a nonstandard name for your makefile, you can specify the makefile name with the ‘-f’ or ‘—file’ option. The arguments ‘-f name’ or ‘—file=name’ tell <code>make</code> to read the file name as the makefile.如：<code>make -f Make.Linux</code>或<code>make --file Make.AIX</code>。</p>
+<h2 id="make-是如何工作的-1"><a href="#make-是如何工作的-1" class="headerlink" title="make 是如何工作的"></a>make 是如何工作的</h2><ol>
+<li><p>读入所有的Makefile。</p>
+</li>
+<li><p>读入被include的其它Makefile。</p>
+</li>
+<li><p>初始化文件中的变量。</p>
+</li>
+<li><p>推导隐晦规则，并分析所有规则。</p>
+</li>
+<li><p>为所有的目标文件创建依赖关系链。</p>
+</li>
+<li><p>根据依赖关系，决定哪些目标要重新生成。</p>
+</li>
+<li><p>执行生成命令。</p>
+</li>
+</ol>
+<h1 id="Makefile-书写规则"><a href="#Makefile-书写规则" class="headerlink" title="Makefile 书写规则"></a>Makefile 书写规则</h1><p>The order of rules is not significant, except for determining the <em>default goal</em>: the target for <code>make</code> to consider, if you do not otherwise specify one. The default goal is the first target of the first rule in the first makefile</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foo.o : foo.c defs.h       <span class="comment"># module for twiddling the frobs</span></span><br><span class="line">        cc -c -g foo.c</span><br></pre></td></tr></table></figure>
+<p>This rule says two things:</p>
+<ul>
+<li>How to decide whether foo.o is out of date: it is out of date if it does not exist, or if either foo.c or defs.h is more recent than it.</li>
+<li>How to update the file foo.o: by running <code>cc</code> as stated. The recipe does not explicitly mention defs.h, but we presume that foo.c includes it, and that is why defs.h was added to the prerequisites.</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>In general, a rule looks like this:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">targets : prerequisites</span><br><span class="line">        recipe</span><br><span class="line">        …</span><br></pre></td></tr></table></figure>
+<p>or like this:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">targets : prerequisites ; recipe</span><br><span class="line">        recipe</span><br><span class="line">        …</span><br></pre></td></tr></table></figure>
+<h2 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h2><p>如果我们想定义一系列比较类似的文件，可以使用通配符。make支持三种通配符：<code>*</code>，<code>?</code>和<code>[...]</code>。这是和Unix的B-Shell是相同的。</p>
+<h2 id="文件搜寻VPATH-amp-vpath"><a href="#文件搜寻VPATH-amp-vpath" class="headerlink" title="文件搜寻VPATH &amp; vpath"></a>文件搜寻VPATH &amp; vpath</h2><h3 id="VPATH"><a href="#VPATH" class="headerlink" title="VPATH"></a>VPATH</h3><p>make默认只在当前的目录中去找寻依赖文件和目标文件。如果指明<code>VPATH</code>的值，make就会在当当前目录找不到的情况下，到所指定的目录中去找寻文件</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VPATH = src:../headers</span><br></pre></td></tr></table></figure>
+<p>上例指定了两个目录：<code>src</code>和<code>../headers</code>，目录间由<code>:</code>分割</p>
+<h3 id="vpath"><a href="#vpath" class="headerlink" title="vpath"></a>vpath</h3><p>另一个设置文件搜索路径的方法是使用make的<code>vpath</code>关键字（注意，它是全小写的）</p>
+<ol>
+<li>vpath &lt; pattern&gt; &lt; directories&gt;<br>为符合模式&lt; pattern&gt;的文件指定搜索目录&lt; directories&gt;。</li>
+<li>vpath &lt; pattern&gt;<br>清除符合模式&lt; pattern&gt;的文件的搜索目录。</li>
+<li>vpath<br>清除所有已被设置好了的文件搜索目录。</li>
+</ol>
+<p>vapth使用方法中的<code>&lt;pattern&gt;</code>需要包含<code>%</code>字符。<code>%</code>的意思是匹配零或若干字符，例如，<code>%.h</code>表示所有以<code>.h</code>结尾的文件。<code>&lt;pattern&gt;</code>指定了要搜索的文件集，而<code>&lt;directories&gt;</code>则指定了的文件集的搜索的目录。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">vpath</span> %.h ../headers</span><br></pre></td></tr></table></figure>
+<p>该语句表示，要求make在<code>../headers</code>目录下搜索所有以<code>.h</code>结尾的文件。</p>
+<h2 id="自动变量"><a href="#自动变量" class="headerlink" title="自动变量"></a>自动变量</h2><p>自动变量是提前约定好的具有特定含义的变量，可以代表特定的文件或其他东西。这样做的好处是不必将所有静态文件名硬编码进 Makefile 中，以避免对文件的重命名或其他删改操作导致Makefile 还需要较为麻烦的修改</p>
+<blockquote>
+<p>In particular, you cannot use them anywhere within the target list of a rule; they have no value there and will expand to the empty string.</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Automatic-Variables">https://www.gnu.org/software/make/manual/make.html#Automatic-Variables</a></p>
+<h3 id=""><a href="#" class="headerlink" title="$@"></a><code>$@</code></h3><p>The file name of the target of the rule. 即规则的目标文件名。<code>$@</code>is the name of whichever target caused the rule’s recipe to be run.</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title="$%"></a><code>$%</code></h3><p>The target member name, when the target is an archive member.仅当目标是函数库文件(.a)文件时，表示规则中目标成员名。如一个目标是(test.a(a.o)),此时$%表示a.o, $@表示test.a</p>
+<h3 id="lt"><a href="#lt" class="headerlink" title="$&lt;"></a><code>$&lt;</code></h3><p>The name of the first prerequisite.</p>
+<h3 id="-2"><a href="#-2" class="headerlink" title="$^"></a><code>$^</code></h3><p>The names of all the prerequisites, with spaces between them.表示所有依赖文件的集合</p>
+<h3 id="-3"><a href="#-3" class="headerlink" title="$+"></a><code>$+</code></h3><p>This is like ‘$^’, but prerequisites listed more than once are duplicated in the order they were listed in the makefile. 表示所有依赖文件的集合(不去重)，保留了依赖文件中重复出现的文件</p>
+<h3 id="-4"><a href="#-4" class="headerlink" title="$?"></a><code>$?</code></h3><p>The names of all the prerequisites that are newer than the target, with spaces between them. 即所有比目标新的依赖目标的集合，或者说所有在目标依赖中被修改过的文件</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="调用语法"><a href="#调用语法" class="headerlink" title="调用语法"></a>调用语法</h3><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(&lt;function&gt; &lt;arguments&gt;)</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">comma:= ,</span><br><span class="line">empty:=</span><br><span class="line">space:= <span class="variable">$(empty)</span> <span class="variable">$(empty)</span></span><br><span class="line">foo:= a b c</span><br><span class="line">bar:= <span class="variable">$(<span class="built_in">subst</span> <span class="variable">$(space)</span>,<span class="variable">$(comma)</span>,<span class="variable">$(foo)</span>)</span></span><br></pre></td></tr></table></figure>
+<p>在这个示例中， <code>$(comma)</code> 的值是一个逗号。 <code>$(space)</code> 使用了 <code>$(empty)</code> 定义了一个空格， <code>$(foo)</code> 的值是 <code>a b c</code> ， <code>$(bar)</code> 的定义用，调用了函数 <code>subst</code> ，这是一个替换函数，这个函数有三个参数，第一个参数是被替换字串，第二个参数是替换字串，第三个参数是替换操作作用的字串。这个函数也就是把 <code>$(foo)</code> 中的空格替换成逗号，所以 <code>$(bar)</code> 的值是 <code>a,b,c</code> 。</p>
+<h3 id="展开通配符函数wildcard"><a href="#展开通配符函数wildcard" class="headerlink" title="展开通配符函数wildcard"></a>展开通配符函数wildcard</h3><p>通配符(wildcard)会在规则中自动展开，但不会再设置变量时或者函数的参数内部展开。如果想要在这些地方展开通配符，就需要<code>wildcard</code>函数：</p>
+<p><code>wildcard</code>函数的一个用法是获得含有所有C源文件的列表：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br></pre></td></tr></table></figure>
+<p>或者通过替换<code>.c</code>为<code>.o</code>，把结果中所有C源文件改为目标文件：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(<span class="built_in">patsubst</span> %.c,%.o,$(<span class="built_in">wildcard</span> *.c)</span>)</span><br></pre></td></tr></table></figure>
+<p>下面的规则可以编译目录中所有C源文件并链接：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">objects := <span class="variable">$(<span class="built_in">patsubst</span> %.c,%.o,$(<span class="built_in">wildcard</span> *.c)</span>)</span><br><span class="line"></span><br><span class="line">foo : <span class="variable">$(objects)</span></span><br><span class="line">        cc -o foo <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>(This takes advantage of the implicit rule for compiling C programs, so there is no need to write explicit rules for compiling the files. See <a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Flavors">The Two Flavors of Variables</a>, for an explanation of ‘:=’, which is a variant of ‘=’.)</p>
+</blockquote>
+<h2 id="其他特性（自行参考手册）"><a href="#其他特性（自行参考手册）" class="headerlink" title="其他特性（自行参考手册）"></a>其他特性（自行参考手册）</h2><h3 id="PHONY"><a href="#PHONY" class="headerlink" title=".PHONY"></a>.PHONY</h3><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Phony-Targets">https://www.gnu.org/software/make/manual/make.html#Phony-Targets</a></p>
+<h3 id="多目标"><a href="#多目标" class="headerlink" title="多目标"></a>多目标</h3><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Multiple-Targets">https://www.gnu.org/software/make/manual/make.html#Multiple-Targets</a></p>
+<p>一个显式的规则可以有多个目标，直接上例子：</p>
+<ul>
+<li>只有<code>prerequisties</code>，没有<code>recipe</code></li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kbd.o command.o files.o: command.h</span><br></pre></td></tr></table></figure>
+<p>等价于</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">kbd.o: command.h</span></span><br><span class="line"><span class="section">command.o: command.h</span></span><br><span class="line"><span class="section">files.o: command.h</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于所有的<code>targets</code>都有相似的<code>recipes</code>，可以使用<code>$@</code>代替<code>targets</code>：</li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bigoutput littleoutput : text.g</span><br><span class="line">        generate text.g -<span class="variable">$(<span class="built_in">subst</span> output,,<span class="variable">$@</span>)</span> &gt; <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
+<p>等价于</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bigoutput : text.g</span><br><span class="line">        generate text.g -big &gt; bigoutput</span><br><span class="line">littleoutput : text.g</span><br><span class="line">        generate text.g -little &gt; littleoutput</span><br></pre></td></tr></table></figure>
+<p>其中，<code>-$(subst output,,$@)</code>中的<code>$</code>表示执行一个Makefile的函数，函数名为<code>subst</code>，后面的为参数。这里的这个函数是截 字符串的意思，<code>$@</code>表示目标的集合，就像一个数组，<code>$@</code>依次取出目标，并执于命令。</p>
+<h3 id="静态模式"><a href="#静态模式" class="headerlink" title="静态模式"></a>静态模式</h3><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Static-Pattern">https://www.gnu.org/software/make/manual/make.html#Static-Pattern</a></p>
+<p>静态模式是一种自动编译模式，可以定义多规则目标，语法如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">targets …: target-pattern: prereq-patterns …</span><br><span class="line">        recipe</span><br><span class="line">        …</span><br></pre></td></tr></table></figure>
+<p>targets定义了一些列的目标文件，也就是多目标，可以有通配符，是目标的一个集合。</p>
+<p>target-pattern 是targets的模式，也就是目标集模式</p>
+<p>prereq-patterns 则是目标的“依赖”元素</p>
+<p>一般将<code>target-pattern</code>定义为<code>%.o</code>，意为<code>target</code>集合都以<code>.o</code>为后缀。</p>
+<p><code>prereq-patterns</code>则定义为<code>%.c</code>，这意思就是对 <code>target-pattern</code>中所形成的目标集进行二次定义，其计算方法是取<code>target-pattern</code>模式中的<code>%</code>代表部分(其实就是去掉<code>.o</code>后的文件名)，并为其加上<code>[.c]</code>结尾，形成新的集合。</p>
+<p>示例如下</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(OBJS)</span>: %.o: %.c</span><br><span class="line">    gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
+<p>这两条命令的功能就是，大目标是<code>OBJS</code>，这个<code>OBJS</code>就是各种.o文件，然后<code>%.o</code>就是具体的解释，而<code>%.c</code>就是对应同样名字的<code>.c</code>文件，<code>&lt;</code>表示依赖对象集中的第一个，<code>@</code> 则代表了目标集。所以这个功能就是要遍历所有的<code>.c</code>文件，对所有的<code>.c</code>文件进行编译，然后编译生成对应的<code>.o</code>文件。我们在实际编写程序时，<code>targets</code>是不需要的，可以简写如下：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">%.o: %.c</span></span><br><span class="line">    gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
+<h3 id="自动生成依赖性"><a href="#自动生成依赖性" class="headerlink" title="自动生成依赖性"></a>自动生成依赖性</h3><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#index-automatic-generation-of-prerequisites">https://www.gnu.org/software/make/manual/make.html#index-automatic-generation-of-prerequisites</a></p>
+<h2 id="make中的函数"><a href="#make中的函数" class="headerlink" title="make中的函数"></a>make中的函数</h2><p><a target="_blank" rel="noopener" href="https://www.gnu.org/software/make/manual/make.html#Functions">https://www.gnu.org/software/make/manual/make.html#Functions</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io">Nocturne</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io/2024/02/15/makefile0/">https://nocturne228.github.io/2024/02/15/makefile0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/GNU/">GNU</a></div><div class="post_share"><div class="social-share" data-image="/my_image/haibara2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/02/13/njupa1-1/" title="PA1(1)"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">PA1(1)</div></div></a></div><div class="next-post pull-right"><a href="/2024/02/15/gcc/" title="GNU cheatsheet"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara3.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">GNU cheatsheet</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/02/15/gcc/" title="GNU cheatsheet"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara3.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-15</div><div class="title">GNU cheatsheet</div></div></a></div><div><a href="/2024/02/15/helloworld/" title="浅入HelloWorld"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-15</div><div class="title">浅入HelloWorld</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nocturne</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">20</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nocturne228"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nocturne228" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:nocturne2282282@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">嗨害嗨，来了嗷</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5"><span class="toc-number">1.</span> <span class="toc-text">程序的编译与链接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Makefile%E8%A7%84%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">Makefile规则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Makefile%E7%9A%84%E8%A7%84%E5%88%99-rules"><span class="toc-number">2.1.</span> <span class="toc-text">Makefile的规则(rules)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84"><span class="toc-number">2.2.</span> <span class="toc-text">make 是如何工作的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">2.3.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make%E8%87%AA%E5%8A%A8%E6%8E%A8%E5%AF%BC"><span class="toc-number">2.4.</span> <span class="toc-text">make自动推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make-clean"><span class="toc-number">2.5.</span> <span class="toc-text">make clean</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Makefile-%E6%80%BB%E8%BF%B0"><span class="toc-number">3.</span> <span class="toc-text">Makefile 总述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Makefile-%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">3.1.</span> <span class="toc-text">Makefile 的组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%80%E5%AE%9A%E6%98%AF-Makefile%EF%BC%9F"><span class="toc-number">3.2.</span> <span class="toc-text">文件名一定是 Makefile？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84-1"><span class="toc-number">3.3.</span> <span class="toc-text">make 是如何工作的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Makefile-%E4%B9%A6%E5%86%99%E8%A7%84%E5%88%99"><span class="toc-number">4.</span> <span class="toc-text">Makefile 书写规则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="toc-number">4.2.</span> <span class="toc-text">通配符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%90%9C%E5%AF%BBVPATH-amp-vpath"><span class="toc-number">4.3.</span> <span class="toc-text">文件搜寻VPATH &amp; vpath</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VPATH"><span class="toc-number">4.3.1.</span> <span class="toc-text">VPATH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vpath"><span class="toc-number">4.3.2.</span> <span class="toc-text">vpath</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8F%98%E9%87%8F"><span class="toc-number">4.4.</span> <span class="toc-text">自动变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.4.1.</span> <span class="toc-text">$@</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">4.4.2.</span> <span class="toc-text">$%</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lt"><span class="toc-number">4.4.3.</span> <span class="toc-text">$&lt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">4.4.4.</span> <span class="toc-text">$^</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-3"><span class="toc-number">4.4.5.</span> <span class="toc-text">$+</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-4"><span class="toc-number">4.4.6.</span> <span class="toc-text">$?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">4.5.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8%E8%AF%AD%E6%B3%95"><span class="toc-number">4.5.1.</span> <span class="toc-text">调用语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%95%E5%BC%80%E9%80%9A%E9%85%8D%E7%AC%A6%E5%87%BD%E6%95%B0wildcard"><span class="toc-number">4.5.2.</span> <span class="toc-text">展开通配符函数wildcard</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%89%B9%E6%80%A7%EF%BC%88%E8%87%AA%E8%A1%8C%E5%8F%82%E8%80%83%E6%89%8B%E5%86%8C%EF%BC%89"><span class="toc-number">4.6.</span> <span class="toc-text">其他特性（自行参考手册）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PHONY"><span class="toc-number">4.6.1.</span> <span class="toc-text">.PHONY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%9B%AE%E6%A0%87"><span class="toc-number">4.6.2.</span> <span class="toc-text">多目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.6.3.</span> <span class="toc-text">静态模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="toc-number">4.6.4.</span> <span class="toc-text">自动生成依赖性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#make%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">4.7.</span> <span class="toc-text">make中的函数</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Nocturne</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
