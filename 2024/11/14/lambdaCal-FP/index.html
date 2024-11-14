@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>lambdaCal_FP | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Lambda Calculus我的最爱Lambda演算 A Combinatory Compiler Programming with Math ｜ The Lambda Calculus Stanford Encyclopedia of Philosophy CoreSyntax:  Variables: $x$, $y$, $*$, …  Lambda-Abstractions: $\lamb">
+<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>lambda演算与函数式编程初见 | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="Lambda Calculus我的最爱Lambda演算 A Combinatory Compiler Programming with Math ｜ The Lambda Calculus Stanford Encyclopedia of Philosophy CoreSyntax:  Variables: $x$, $y$, $*$, …  Lambda-Abstractions: $\lamb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lambdaCal_FP">
+<meta property="og:title" content="lambda演算与函数式编程初见">
 <meta property="og:url" content="https://nocturne228.github.io/2024/11/14/lambdaCal-FP/index.html">
 <meta property="og:site_name" content="Xiaoma&#39;s blog">
 <meta property="og:description" content="Lambda Calculus我的最爱Lambda演算 A Combinatory Compiler Programming with Math ｜ The Lambda Calculus Stanford Encyclopedia of Philosophy CoreSyntax:  Variables: $x$, $y$, $*$, …  Lambda-Abstractions: $\lamb">
 <meta property="og:locale" content="zn_CN">
 <meta property="og:image" content="https://nocturne228.github.io/my_image/haibara2.jpg">
 <meta property="article:published_time" content="2024-11-14T15:53:52.000Z">
-<meta property="article:modified_time" content="2024-11-14T15:54:37.493Z">
+<meta property="article:modified_time" content="2024-11-14T16:02:08.143Z">
 <meta property="article:author" content="Nocturne">
 <meta property="article:tag" content="Functional Programming">
 <meta name="twitter:card" content="summary">
@@ -51,12 +51,12 @@
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'lambdaCal_FP',
+  title: 'lambda演算与函数式编程初见',
   isPost: true,
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-11-14 23:54:37'
+  postUpdate: '2024-11-15 00:02:08'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -153,7 +153,7 @@
         }
       }
       detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">lambdaCal_FP</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-14T15:53:52.000Z" title="Created 2024-11-14 23:53:52">2024-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-14T15:54:37.493Z" title="Updated 2024-11-14 23:54:37">2024-11-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">364</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>2mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="lambdaCal_FP"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Lambda-Calculus"><a href="#Lambda-Calculus" class="headerlink" title="Lambda Calculus"></a>Lambda Calculus</h1><p><a target="_blank" rel="noopener" href="https://cgnail.github.io/academic/lambda-1/">我的最爱Lambda演算</a></p>
+    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">34</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara2.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">lambda演算与函数式编程初见</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-14T15:53:52.000Z" title="Created 2024-11-14 23:53:52">2024-11-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-14T16:02:08.143Z" title="Updated 2024-11-15 00:02:08">2024-11-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">364</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>2mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="lambda演算与函数式编程初见"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Lambda-Calculus"><a href="#Lambda-Calculus" class="headerlink" title="Lambda Calculus"></a>Lambda Calculus</h1><p><a target="_blank" rel="noopener" href="https://cgnail.github.io/academic/lambda-1/">我的最爱Lambda演算</a></p>
 <p><a target="_blank" rel="noopener" href="https://crypto.stanford.edu/~blynn/lambda/sk.html">A Combinatory Compiler</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kn4y1X7kb/?spm_id_from=333.337.search-card.all.click&amp;vd_source=0024ced12c6d4e5a148189fa2eb49dd9">Programming with Math ｜ The Lambda Calculus</a></p>
 <p><a target="_blank" rel="noopener" href="https://plato.stanford.edu/index.html">Stanford Encyclopedia of Philosophy</a></p>
@@ -174,18 +174,19 @@
 </blockquote>
 <h2 id="Currying"><a href="#Currying" class="headerlink" title="Currying"></a>Currying</h2><p>A function takes two numbers and return sum of them:</p>
 <script type="math/tex; mode=display">
-(\lambda x.\lambda y.L)\ M\ N\rightarrow_\beta\\
-(\lambda y.L[M/x]) N\rightarrow_\beta\\
+(\lambda x.\lambda y.L)\ M\ N\rightarrow_\beta</script><script type="math/tex; mode=display">
+(\lambda y.L[M/x]) N\rightarrow_\beta</script><script type="math/tex; mode=display">
 (L[M/x][N/y])</script><p>This method funtion returning funtions to sequentially  apply to multiple inputs called <strong>Currying</strong>.</p>
 <p>For example, in Python:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="keyword">lambda</span> x : <span class="keyword">lambda</span> y : x + y) (<span class="number">1</span>) (<span class="number">2</span>) <span class="comment"># pretty cool!</span></span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
 <h2 id="More-Practical-Example"><a href="#More-Practical-Example" class="headerlink" title="More Practical Example"></a>More Practical Example</h2><script type="math/tex; mode=display">
-\text{True} = \lambda x.\lambda y.x\\
-\text{False} = \lambda x.\lambda y.y\\
-\text{if then}=\lambda b.\lambda x.\lambda y.b\ x\ y\\
-\text{not}=\lambda b.\ \text{if}\ b\ (\text{then})\ \text{False}\ (\text{else})\ \text{True}\\=\lambda b.(\lambda b.\lambda x. \lambda y.b\ x\ y)\ b\ (\lambda x.\lambda y.y)\ (\lambda x.\lambda y.x)</script><h2 id="Curry-Numerals"><a href="#Curry-Numerals" class="headerlink" title="Curry Numerals"></a>Curry Numerals</h2><script type="math/tex; mode=display">
-0=\lambda f.\lambda x.x\\
-1=\lambda f.\lambda x.f\ x\\
+\text{True} = \lambda x.\lambda y.x</script><script type="math/tex; mode=display">
+\text{False} = \lambda x.\lambda y.y</script><script type="math/tex; mode=display">
+\text{if then}=\lambda b.\lambda x.\lambda y.b\ x\ y</script><script type="math/tex; mode=display">
+\text{not}=\lambda b.\ \text{if}\ b\ (\text{then})\ \text{False}\ (\text{else})\ \text{True}</script><script type="math/tex; mode=display">
+=\lambda b.(\lambda b.\lambda x. \lambda y.b\ x\ y)\ b\ (\lambda x.\lambda y.y)\ (\lambda x.\lambda y.x)</script><h2 id="Curry-Numerals"><a href="#Curry-Numerals" class="headerlink" title="Curry Numerals"></a>Curry Numerals</h2><script type="math/tex; mode=display">
+0=\lambda f.\lambda x.x</script><script type="math/tex; mode=display">
+1=\lambda f.\lambda x.f\ x</script><script type="math/tex; mode=display">
 2=\lambda f.\lambda x.f(f\ x)</script><h1 id="Worth-it"><a href="#Worth-it" class="headerlink" title="Worth it?"></a>Worth it?</h1><p>Ignore low level implementation, and just overdeal objects themselves.</p>
 <h1 id="FunctionalProgramming"><a href="#FunctionalProgramming" class="headerlink" title="FunctionalProgramming"></a>FunctionalProgramming</h1><blockquote>
 <p>  A <strong>functional program</strong> consists of an expression $E$ (representing both the algorithm and the input).  This expression $E$ is subject to some rewrite rules.  <strong>Reduction</strong> consists of replacing some part $P$ of $E$ by another expression $P’$ according to the given rewrite rules. … This process of reduction will be repeated until the resulting expression has no more parts that can be rewritten.  The expression $E^<em>$ thus obtained is called the <em>*normal form</em></em> of $E$ and constitutes the output of the functional program</p>
@@ -213,7 +214,42 @@ function panguInit () {
   }
 }
 
-document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
   const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
   if ($mermaid.length === 0) return
   const runMermaid = () => {
