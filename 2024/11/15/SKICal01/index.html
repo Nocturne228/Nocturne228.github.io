@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="ZN-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>初见SKI Combinator Calculus | Xiaoma's blog</title><meta name="author" content="Nocturne"><meta name="copyright" content="Nocturne"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="SKI Combinator CalculusBasic ElementsCombinator: A function without free variables Calculus: A method of computation or calculation in a special notation Something about combinator CombinatorThe SKI c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初见SKI Combinator Calculus">
+<meta property="og:url" content="https://nocturne228.github.io/2024/11/15/SKICal01/index.html">
+<meta property="og:site_name" content="Xiaoma&#39;s blog">
+<meta property="og:description" content="SKI Combinator CalculusBasic ElementsCombinator: A function without free variables Calculus: A method of computation or calculation in a special notation Something about combinator CombinatorThe SKI c">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="https://nocturne228.github.io/my_image/haibara4.jpg">
+<meta property="article:published_time" content="2024-11-15T13:00:45.000Z">
+<meta property="article:modified_time" content="2024-11-15T13:16:44.650Z">
+<meta property="article:author" content="Nocturne">
+<meta property="article:tag" content="Functional Programming">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://nocturne228.github.io/my_image/haibara4.jpg"><link rel="shortcut icon" href="/img/terminal-solid.svg"><link rel="canonical" href="https://nocturne228.github.io/2024/11/15/SKICal01/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '初见SKI Combinator Calculus',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-15 21:16:44'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custombg.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_image/haibara4.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Xiaoma's blog"><span class="site-name">Xiaoma's blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-pen-nib"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tablets"></i><span> Daily</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><i class="fa-fw fa-solid fa-book"></i><span> Diary</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/code/"><i class="fa-fw fas fa-bug"></i><span> Code</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">初见SKI Combinator Calculus</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-11-15T13:00:45.000Z" title="Created 2024-11-15 21:00:45">2024-11-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-15T13:16:44.650Z" title="Updated 2024-11-15 21:16:44">2024-11-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>9mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="初见SKI Combinator Calculus"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="SKI-Combinator-Calculus"><a href="#SKI-Combinator-Calculus" class="headerlink" title="SKI Combinator Calculus"></a>SKI Combinator Calculus</h1><h2 id="Basic-Elements"><a href="#Basic-Elements" class="headerlink" title="Basic Elements"></a>Basic Elements</h2><p>Combinator:</p>
+<pre><code>A function without free variables
+</code></pre><p>Calculus:</p>
+<pre><code>A method of computation or calculation in a special notation
+</code></pre><p><a target="_blank" rel="noopener" href="https://writings.stephenwolfram.com/2020/12/combinators-and-the-story-of-computation/">Something</a> about <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Combinatory_logic">combinator</a></p>
+<h2 id="Combinator"><a href="#Combinator" class="headerlink" title="Combinator"></a>Combinator</h2><p>The <strong>SKI combinator calculus</strong> is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Combinatory_logic">combinatory logic system</a> and a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Model_of_computation">computational system</a>.</p>
+<p>All operations in lambda calculus can be encoded via <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Combinatory_logic#Completeness_of_the_S-K_basis">abstraction elimination</a> into the SKI calculus as <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Binary_tree">binary trees</a> whose leaves are one of the three symbols <strong>S</strong>, <strong>K</strong>, and <strong>I</strong> (called <em>combinators</em>).</p>
+<p>$S$ takes two funtions $f$ and $g$, returns a new funtion, which apply input to each of $f$ and $g$, then combine them. $S$ is a way to program function calls (applications) and reuse values (make copies).</p>
+<p>This rule is called <strong>Generalized funtion application</strong>.</p>
+<script type="math/tex; mode=display">
+S\ x\ y\ z\rightarrow(x\ z)\ (y\ z)</script><p>or more intuitively but less generally which means apply $x$ to funtion $f$ and $g$:</p>
+<script type="math/tex; mode=display">
+S\ f\ g\ x \rightarrow (f\ x)\ (g\ x)</script><p>Definition of $S$ combinator in lambda calculus:</p>
+<script type="math/tex; mode=display">
+S=\lambda f.\lambda g.\lambda x.(f\ x)\ (g\ x)</script><hr>
+<p>$K$ takes two parameter and return the first one. It’s called <strong>Constant functions</strong></p>
+<script type="math/tex; mode=display">
+K\ x\ y\rightarrow x</script><p>Defined in lambda calculus:</p>
+<script type="math/tex; mode=display">
+K=\lambda x.\lambda y.x</script><hr>
+<p>The simplest one is $I$, return what it gets. <strong>Indentity function</strong></p>
+<script type="math/tex; mode=display">
+I\ x\rightarrow x</script><p>In lambda calculus:</p>
+<script type="math/tex; mode=display">
+I=\lambda x.x</script><h2 id="Definition-Rules"><a href="#Definition-Rules" class="headerlink" title="Definition Rules"></a>Definition Rules</h2><p>The <em>terms</em> of the SKI calculus are the smallest set such that\</p>
+<ul>
+<li>$S$, $K$, and $I$ are terms</li>
+<li>If $x$ and $y$ are terms, then $x\ y$ is a term</li>
+</ul>
+<p>Terms are trees, not strings</p>
+<ul>
+<li>Parentheses show association where necessary</li>
+<li>In the absence of parentheses, association is to the left<ul>
+<li>i.e., $S\ x\ y\ z=(((S\ x)\ y)\ z)$</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">     S    </span><br><span class="line">   /   \</span><br><span class="line">  K     \</span><br><span class="line"> / \     \</span><br><span class="line">K   x     \</span><br><span class="line">           S</span><br><span class="line">          / </span><br><span class="line">         y</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">       /\</span><br><span class="line">      /  \</span><br><span class="line">     /    \</span><br><span class="line">    /\     \</span><br><span class="line">   /  \    /\</span><br><span class="line">  /    \  S  y</span><br><span class="line"> /\    /\</span><br><span class="line">S  K  K  x</span><br></pre></td></tr></table></figure>
+<h2 id="Grammar"><a href="#Grammar" class="headerlink" title="Grammar"></a>Grammar</h2><p>Context Free Grammar:</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+& \text{Expr}\rightarrow S\\
+& \text{Expr}\rightarrow K\\
+& \text{Expr}\rightarrow I\\
+& \text{Expr}\rightarrow \text{Expr Expr}\\
+& \text{Expr}\rightarrow \text{(Expr)}
+\end{aligned}</script><script type="math/tex; mode=display">
+\text{Expr}\rightarrow S\ |\ K\ |\ I\ |\ \text{Expr Expr}\ |\ \text{(Expr)}</script><p>A context-free grammar is a set of recursive rules used to generate patterns of <a target="_blank" rel="noopener" href="https://brilliant.org/wiki/strings/">strings</a>. A context-free grammar can describe all <a target="_blank" rel="noopener" href="https://brilliant.org/wiki/regular-languages/">regular languages</a> and more, but they cannot describe <em>all</em> possible languages.</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://upload.wikimedia.org/wikipedia/commons/d/d9/C_grammar_stmt_svg.svg" alt="wiki"></p>
+<p>Take “x+y*z” as example:</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ds055uzetaobb.cloudfront.net/brioche/uploads/YZjIA0gLXU-cfg.png?width=2500" alt="x+y*z"></p>
+<p>In particular, in a context-free grammar, each production rule is of the form $A\rightarrow\alpha$ with $A$ a <em>single</em> nonterminal symbol, and $\alpha$ a string of terminals and/or nonterminals ($\alpha$ can be empty). Regardless of which symbols surround it, the single nonterminal A on the left hand side can always be replaced by $\alpha$ on the right hand side.</p>
+<blockquote>
+<p>  🤖（ChatGPT）：</p>
+<p>  上下文无关文法中，每个产生式的左侧是单一的非终结符，而右侧可以是终结符或非终结符的任意组合。</p>
+<p>  在 SKI 组合子计算中，<strong>上下文无关文法</strong>可以用来描述组合子的有效表达式（即组合子表达式）。</p>
+<p>  这些规则定义了一个名为 $Expr$ 的非终结符，它表示 SKI 组合子计算中的合法表达式。每一条规则都是一个产生式，描述了如何从一些符号（终结符或非终结符）构造一个有效的表达式。下面逐条解释这些规则。</p>
+<ol>
+<li><p><strong>Expr → S</strong></p>
+<p>这个规则表示表达式 $Expr$ 可以是 $S$ 组合子。也就是说，$S$ 是一个合法的表达式。</p>
+</li>
+<li><p><strong>Expr → K</strong></p>
+<p>这个规则表示表达式 $Expr$ 可以是 $K$ 组合子。即 $K$ 是一个合法的表达式。</p>
+</li>
+<li><p><strong>Expr → I</strong></p>
+<p>这个规则表示表达式 $Expr$ 可以是 $I$ 组合子。即 $I$ 是一个合法的表达式。</p>
+</li>
+<li><p><strong>Expr → Expr Expr</strong></p>
+<p>这个规则表示表达式 $Expr$ 可以由两个表达式组合而成。两个 $Expr$ 表达式通过空格（表示函数应用）连接起来。例如，如果 $E1$ 和 $E2$ 是两个有效的 $Expr$，那么 $E1\ E2$ 也是一个有效的表达式。这个规则定义了函数应用的基本结构。换句话说，它表示两个组合子表达式可以组合成一个更复杂的表达式。</p>
+</li>
+</ol>
+<ul>
+<li>例如，$S\ K$ 表示 $S$ 应用 $K$，是一个合法的 $Expr$。</li>
+</ul>
+<ol>
+<li><p><strong>Expr → (Expr)</strong></p>
+<p>这个规则表示表达式 $Expr$ 可以被括号括起来，这允许表达式可以嵌套。在某些情况下，括号有助于明确表达式的优先级或结构。</p>
+</li>
+</ol>
+<ul>
+<li><p>例如，$S\ K$ 是一个合法的表达式，表示将 $S$ 应用到 $K$。</p>
+<p>综合来看：</p>
+<p>这些规则定义了 SKI 组合子计算中的所有可能的表达式的结构。$S$、$K$ 和 $I$ 是基本的终结符，可以直接作为表达式；而 $Expr\ Expr$ 和 $(Expr)$`$ 则提供了表达式的组合方式和结构。</p>
+<p>通过这些规则，任何合法的 SKI 组合子表达式都可以通过组合这些基本规则生成。例如：</p>
+</li>
+<li><p>$S$</p>
+</li>
+<li>$K$</li>
+<li>$I$</li>
+<li>$S\ K$</li>
+<li>$S\ K$</li>
+<li>$S\ (K\ I)$</li>
+<li>$(S\ K)\ I$</li>
+<li><p>$S\ S\ (K\ I)$</p>
+<p>这些都是符合给定文法的合法表达式。这种文法是<strong>上下文无关的</strong>，因为规则的应用不依赖于上下文（例如，位置或其他符号的状态），而是只依赖于当前的符号（在这个例子中是 $Expr$）。</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="Rewrite-Rules"><a href="#Rewrite-Rules" class="headerlink" title="Rewrite Rules"></a>Rewrite Rules</h2><p>The three rules of the SKI calculus are an example of a <em>rewrite system</em></p>
+<ul>
+<li>Any expression (or subexpression) that matches the left-hand side of a rule can be replaced by the right-hand side</li>
+</ul>
+<p>The symbol $\rightarrow$ stands for a single rewrite</p>
+<p>The symbol $\rightarrow^*$ stands for the reflexive, transitive closure of $\rightarrow$</p>
+<script type="math/tex; mode=display">
+S\ K\ x\ y\rightarrow(K\ y)\ (x\ y)\rightarrow y</script><h2 id="Recursion"><a href="#Recursion" class="headerlink" title="Recursion"></a>Recursion</h2><script type="math/tex; mode=display">
+\begin{align}
+S\ I\ I\ x \\
+&\hspace{-2em} \rightarrow (I\ x)\ (I\ x) \\
+&\hspace{-2em} \rightarrow x\ (I\ x) \\
+&\hspace{-2em} \rightarrow x\ x
+\end{align}</script><p>Noticed it’s self-calling:</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(S\ I\ I)\ (S\ I\ I)\\
+&\hspace{-4em}\rightarrow (I\ (S\ I\ I)\ (I\ (S\ I\ I))\\
+&\hspace{-4em}\rightarrow (S\ I\ I)\ (I\ (S\ I\ I))\\
+&\hspace{-4em}\rightarrow (S\ I\ I)\ (S\ I\ I)
+\end{aligned}</script><p>Can always be rewritten, since it rewrites to itself</p>
+<p>A form of looping</p>
+<h2 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h2><p><strong>Encoding</strong>:</p>
+<ul>
+<li>We choose combinators to represent $\text{true}$, $\text{false}$</li>
+<li>And combinators $\text{not}$, $\text{or}$, $\text{and}$ that have the correct behavior on those values</li>
+</ul>
+<p>Abstract Data Type (ADT)</p>
+<ul>
+<li>Except there is no type system to enforce the abstractions</li>
+</ul>
+<p><strong>Booleans</strong>:</p>
+<ul>
+<li>Represent true by a function that picks the first of two arguments</li>
+<li>Represent false by a function that picks the second of two arguments</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{align}
+& \text{True} = T\ x\ y\rightarrow x\\
+& \text{False} = F\ x\ y\rightarrow y\\
+\end{align}</script><p>Use SKI (Let $B$ be a Boolean ($T$ or $F$)):</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&T &=& K\\
+&F &=& S\ K\\
+&\text{not}\ B &=& B\ F\ T\\
+&B1\ \text{or}\ B2 &=& B1\ T\ B2\\
+&B1\ \text{and}\ B2 &=& B1\ B2\ F\\
+\end{align}</script><h2 id="If-Then-Else"><a href="#If-Then-Else" class="headerlink" title="If-Then-Else"></a>If-Then-Else</h2><p>Let $B$ be a Boolean ($T$ or $F$)</p>
+<script type="math/tex; mode=display">
+\text{if B then X else Y} = B\ X\ Y</script><h2 id="Combinators"><a href="#Combinators" class="headerlink" title="Combinators"></a>Combinators</h2><h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><p>Let’s say we want a combinator</p>
+<script type="math/tex; mode=display">
+\text{swap}\ x\ y = y\ x</script><p>Use SKI:</p>
+<script type="math/tex; mode=display">
+\text{swap}=S\ (K\ (S\ I))\ (S\ (K\ K)\ I)</script><h1 id="Comprehension"><a href="#Comprehension" class="headerlink" title="Comprehension"></a>Comprehension</h1><p>Consider a function equation of one variable: $f\ x=E$:</p>
+<pre><code>If we apply function $f$ to argument $x$, the result is $E$.
+</code></pre><blockquote>
+<p>  Systematic way:</p>
+<ul>
+<li>Start with a function equation using variables that specifies what we want</li>
+<li>An <em>abstraction algorithm</em> A(…) maps the right-hand side to a combinator</li>
+<li>The key is to eliminate the variables by replacing them with uses of the combinators $S$, $K$, and $I$</li>
+</ul>
+</blockquote>
+<h2 id="Systematic-Approach"><a href="#Systematic-Approach" class="headerlink" title="Systematic Approach"></a>Systematic Approach</h2><p>Writing Combinators: A Systematic Approach</p>
+<ol>
+<li><p>Consider a function equation of one variable: $f\ x = E$</p>
+<ul>
+<li>If we apply function $f$ to argument $x$, the result is $E$.</li>
+</ul>
+</li>
+<li><p>We want a combinator $A(E, x)$ that implements $f$</p>
+<ul>
+<li>Therefore, $A(E, x)\ x = E$</li>
+<li>And $A(E, x)$ doesn’t use $x$</li>
+<li>We say we abstract $E$ with respect to $x$</li>
+</ul>
+</li>
+<li><p>Rules:</p>
+<ul>
+<li>$A(x, x) = I$</li>
+<li>$A(E, x) = K\ E$ if $x$ does not appear in $E$</li>
+<li>$A(E1\ E2, x) = S\ A(E1, x)\ A(E2, x)$</li>
+</ul>
+</li>
+<li><p>Note: $A(…)$ is not a combinator</p>
+<ul>
+<li>It is a (recursively defined) mapping from expressions with variables to combinators.</li>
+</ul>
+</li>
+</ol>
+<h2 id="Swap"><a href="#Swap" class="headerlink" title="Swap"></a>Swap</h2><p>Take <strong>swap</strong> as an example $\text{swap}\ x\ y = y\ x$:</p>
+<p>First abstract $y$</p>
+<p>$(\text{swap}\ x)\ y=y\ x$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{swap}\ x\\
+&=A(y\ x, y)\\
+&=S\ A(y,y)\ A(x,y)\\
+&=S\ I\ (K\ x)
+\end{aligned}</script><p>Now eliminate $x$ from the result of the previous step:</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{swap}\\
+&=A(S\ I\ (K\ x), x)\\
+&=S\ A(S\ I,x)\ A(K\ x, x)\\
+&=S\ (K\ (S\ I))\ A(K\ x, x)\\
+&=S\ (K\ (S\ I))\ (S\ A(K,x)\ A(x,x))\\
+&=S\ (K\ (S\ I))\ (S\ (K\ K)\ A(x,x))\\
+&=S\ (K\ (S\ I))(S\ (K\ K)\ I)
+\end{aligned}</script><p>tedious, huge and hard to read</p>
+<h2 id="Improvement"><a href="#Improvement" class="headerlink" title="Improvement"></a>Improvement</h2><p>Improvements</p>
+<ul>
+<li><p>We can introduce helper combinators to reduce the size of abstracted expressions.</p>
+</li>
+<li><p>In $S\ x\ y\ z$, often $z$ is only used in one of $x$ or $y$</p>
+<ul>
+<li>We can avoid copying $z$ and just pass it to the one combinator that uses it.</li>
+</ul>
+</li>
+<li><p>Define:</p>
+<ul>
+<li>$c1\ x\ y\ z = x\ (y\ z)$ — a version of S where the first argument is constant (doesn’t use z)</li>
+<li>$c2\ x\ y\ z = (x\ z)\ y$ — a version of S where the second argument is constant (doesn’t use z)</li>
+</ul>
+</li>
+<li><p>Add new cases to the abstraction algorithm for applications that use $c1$ or $c2$ if possible:</p>
+<ul>
+<li>$A(E1\ E2, x) = c1\ E1\ A(E2, x)$ if $x$ does not appear in $E1$</li>
+<li>$A(E1\ E2, x) = c2\ A(E1, x)\ E2$ if $x$ does not appear in $E2$</li>
+<li>$A(E1\ E2, x) = S\ A(E1, x)\ A(E2, x)$ otherwise</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref."></a>Ref.</h1><p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/cs242/materials/lectures/lecture02.pdf">Combinator Calculus</a></p>
+<p><a target="_blank" rel="noopener" href="https://doisinkidney.com/posts/2020-10-17-ski.html">Fun with combinators</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/B,_C,_K,_W_system">Wikipedia BCKW system</a></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SKI_combinator_calculus">Wikipedia SKI system</a></p>
+<p><a target="_blank" rel="noopener" href="https://komiamiko.me/math/ordinals/2020/06/21/ski-numerals.html">Large numbers in the SKI combinator calculus</a></p>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/4304294/rules-for-converting-lambda-calculus-expressions-to-ski-combinator-calculus-expr">Rules for converting lambda calculus expressions to SKI combinator calculus expression? Which rule(s) is/are incorrect?</a></p>
+<p><a target="_blank" rel="noopener" href="https://developerdiary.me/ski-calculus/">SKI Calculus - A variable-free programming language</a></p>
+<p><a target="_blank" rel="noopener" href="https://okmij.org/ftp/tagless-final/ski.pdf">λ to SKI, Semantically</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io">Nocturne</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://nocturne228.github.io/2024/11/15/SKICal01/">https://nocturne228.github.io/2024/11/15/SKICal01/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Functional-Programming/">Functional Programming</a></div><div class="post_share"><div class="social-share" data-image="/my_image/haibara4.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/11/14/lambdaCal-FP/" title="lambda演算与函数式编程初见"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">lambda演算与函数式编程初见</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/11/14/lambdaCal-FP/" title="lambda演算与函数式编程初见"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/haibara4.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-14</div><div class="title">lambda演算与函数式编程初见</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/my_image/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Nocturne</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">18</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/nocturne228"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Nocturne228" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:nocturne2282282@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">嗨害嗨，来了嗷</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SKI-Combinator-Calculus"><span class="toc-number">1.</span> <span class="toc-text">SKI Combinator Calculus</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Elements"><span class="toc-number">1.1.</span> <span class="toc-text">Basic Elements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Combinator"><span class="toc-number">1.2.</span> <span class="toc-text">Combinator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Definition-Rules"><span class="toc-number">1.3.</span> <span class="toc-text">Definition Rules</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-number">1.4.</span> <span class="toc-text">Grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rewrite-Rules"><span class="toc-number">1.5.</span> <span class="toc-text">Rewrite Rules</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recursion"><span class="toc-number">1.6.</span> <span class="toc-text">Recursion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Condition"><span class="toc-number">1.7.</span> <span class="toc-text">Condition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#If-Then-Else"><span class="toc-number">1.8.</span> <span class="toc-text">If-Then-Else</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Combinators"><span class="toc-number">1.9.</span> <span class="toc-text">Combinators</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#swap"><span class="toc-number">1.9.1.</span> <span class="toc-text">swap</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Comprehension"><span class="toc-number">2.</span> <span class="toc-text">Comprehension</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Systematic-Approach"><span class="toc-number">2.1.</span> <span class="toc-text">Systematic Approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Swap"><span class="toc-number">2.2.</span> <span class="toc-text">Swap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Improvement"><span class="toc-number">2.3.</span> <span class="toc-text">Improvement</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ref"><span class="toc-number">3.</span> <span class="toc-text">Ref.</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By Nocturne</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
